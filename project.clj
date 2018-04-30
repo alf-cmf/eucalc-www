@@ -17,13 +17,16 @@
                  [org.danielsz/system "0.4.0"]
                  [org.clojure/tools.namespace "0.2.11"]
                  [re-frame "0.9.3"]
-                 [lambdaisland/garden-watcher "0.3.1"]]
+                 [lambdaisland/garden-watcher "0.3.1"]
+		 [tailrecursion/ring-proxy "2.0.0-SNAPSHOT"]
+		 [clj-http "2.0.1"]]
 
   :plugins [[lein-cljsbuild "1.1.5"]
             [lein-environ "1.1.0"]]
 
   :min-lein-version "2.6.1"
 
+;;;; PROXY>  :source-paths ["src/clj" "src/cljs" "src/cljc" "src/proxy"]
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
 
   :test-paths ["test/clj" "test/cljc"]
@@ -73,7 +76,9 @@
   ;; merging. So don't put a :figwheel section under the :dev profile, it will
   ;; not be picked up, instead configure figwheel here on the top level.
 
-  :figwheel {;; :http-server-root "public"       ;; serve static assets from resources/public/
+  :figwheel {
+;;;; PROXY>              :ring-handler eucalc-handler/dev-app
+             ;; :http-server-root "public"       ;; serve static assets from resources/public/
              ;; :server-port 3449                ;; default
              ;; :server-ip "127.0.0.1"           ;; default
              :css-dirs ["resources/public/css"]  ;; watch and update CSS

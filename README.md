@@ -143,3 +143,10 @@ your option) any later version.
 ## Chestnut
 
 Created with [Chestnut](http://plexus.github.io/chestnut/) 0.15.1 (f25b545d).
+
+## Warning
+
+The above is only valid for the clojurescript part of this source
+code. As of [2018-04-30 Mon] this project is using a patched version
+of https://github.com/decc/global-calculator as well as a minimal
+version of https://bitbucket.org/eucalcmodel/
