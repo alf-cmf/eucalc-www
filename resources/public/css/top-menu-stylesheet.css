@@ -1,0 +1,74 @@
+#timeline {
+    margin-top:20px;
+}
+
+section.module.top-menu {
+    top: 0;
+    width: 100%;
+    background-color: blanchedalmond;
+    z-index:99;
+}
+
+.top-menu-sticky {
+  position: fixed;
+  top: 0;
+  z-index:99;
+  background: white;
+  width: 100%;
+}
+
+.top-menu-hr {
+    height:0;
+    border-top: 1px solid rgba(0, 0, 0, .15);
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+.bottom-menu-hr {
+    height:0;
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
+    margin-bottom:0px;
+}
+
+#container-2l-navigation {
+    padding-left: 320px;
+}
+
+.geography-feedback {
+    white-space: nowrap;
+    display: block;
+}
+
+
+.mosaic-row-header {
+    display: table;
+    height:75px;
+    padding-left: 20px;
+    margin-bottom: 0px;
+}
+
+.mosaic-row {
+    display: table;
+    height:50px;
+    padding-left: 20px;
+    margin-bottom:-10px;
+}
+
+.mosaic-row-sticky {
+    display: table;
+    height: 10px;
+    padding-left: 20px;
+    z-index:1;
+}
+
+.mosaic-column {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+#top-menu-minimized {
+    opacity:.85;
+    background-color:lightgrey;
+}

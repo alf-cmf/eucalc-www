@@ -1,0 +1,83 @@
+section.module.parallax-on {
+    padding-left: 300px;
+    height: 243px;
+}
+
+section.module.parallax-off {
+    padding-left: 300px;
+    height: 0px;
+/*    border: 1px solid orange; */
+}
+
+section.module.content {
+/*  padding-top: 2%; 
+  padding-bottom: 1%;  */
+    padding-left: 300px;
+    padding-bottom: 2%;
+}
+
+/* Here are the pictures 
+section.module.parallax-1 {
+  background-image: url("/imgs/cb1.jpg");
+  opacity: 0.8;
+}
+
+section.module.parallax-1 {
+  background-image: url("/imgs/orange.jpg");
+  opacity: 0.8;
+}
+*/
+section.module.parallax-1 {
+  background-image: url("/imgs/orange2.jpg");
+  opacity: 0.8;
+/*
+ border: 1px solid orange;
+*/
+}
+
+section.module.parallax-2 {
+  background-image: url("/imgs/cb2.jpg");
+  opacity: 0.8;
+}
+section.module.parallax-3 {
+  background-image: url("/images/cb3.jpg");
+  opacity: 0.8;
+}
+section.module.parallax-4 {
+  background-image: url("/images/cb4.jpg");
+  opacity: 0.9;
+}
+
+
+/* MEDIA QUERIES */
+
+@media all and (min-device-width: 1024px) {
+
+  section.module.parallax {
+    background-attachment: fixed;   /* HERE IS THE MAGIC*/
+    background-position: 50% 310px;
+    background-repeat: no-repeat;
+    margin-top: 0px;
+  }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+  section.module.parallax {
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 400px;
+  }
+
+}
+
+@media all and (max-width: 768px) {
+
+  section.module.parallax {
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 200px;
+  }
+
+
+}

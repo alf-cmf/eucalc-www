@@ -1,0 +1,186 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<title>Global Calculator | How are costs calculated?</title>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js-v23/gc-translation-tables-mandarin-1.js" charset="utf-8"></script>
+<script type="text/javascript" src="js-v23/gc-translation-tables-muliple-1.js" charset="utf-8"></script>
+<script type="text/javascript" src="js-v23/gc-translation-tables-japanese.js" charset="utf-8"></script>
+
+<script type="text/javascript" src="js-v23/gc-translate.js"></script>
+
+<link rel="stylesheet" href="levers/css/levers.css" type="text/css" />
+
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-48107201-1', 'pik-potsdam.de');
+  ga('send', 'pageview');
+</script>
+
+<script>
+
+function getLanguageIDFromUrl () {
+  try {
+    var href= window.location.href.split("?lid=");
+    if (href[1] == null) return "en";
+    var languageID = href[1];
+    if (isValidLanguageID (languageID)) return languageID;
+    else                        	return "en";
+  }
+  catch (e) {
+    // alert ("oops" + e);
+    return "en";
+  }
+}
+
+var languageID = "en";
+
+function getFormattedString (str) {
+
+  while (str.indexOf ("[[CO2]]") >= 0)
+     str = str.replace("[[CO2]]", "CO<sub>2</sub>");
+  while (str.indexOf ("[[CH4]]") >= 0)
+     str = str.replace("[[CH4]]", "CH<sub>4</sub>");
+  while (str.indexOf ("[[N2O]]") >= 0)
+     str = str.replace("[[N2O]]", "N<sub>2</sub>O");
+  while (str.indexOf ("[[SO2]]") >= 0)
+     str = str.replace("[[SO2]]", "SO<sub>2</sub>");
+
+  return str;
+}
+
+$(document).ready(function() {
+
+   languageID = getLanguageIDFromUrl();
+
+    $('.translate').each(function(index, element) {
+               new_html = translate($(this).html());
+               $(this).html(new_html);
+    });
+
+  document.title = translate("The Global Calculator") + " | " + translate("How are costs calculated?");
+
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+<table border="0" align="center" style="margin-top:40px" width="820">
+
+
+<tr>
+<td colspan="2" align="right"><small><span class="translate">The Global Calculator</span> | <span class="translate">How are costs calculated?</span></small>
+
+<tr>
+<td colspan="2">
+<hr size="1" color="lightgray" noshade="noshade">
+
+<h1 class="translate">How are costs calculated?</h1>
+
+<hr size="1" color="lightgray" noshade="noshade">
+
+<tr>
+<td colspan="2">
+
+
+<h2 class="translate">Total energy system cost</h2>
+<span class="translate">
+The Global Calculator estimates the total energy system cost of a given pathway. This includes the capital, operating and fuel costs of the global energy system out to 2050. For example, it includes the costs of building and maintaining power stations, wind turbines, heat pumps, boilers, cars, trains, planes, roads, railways and the clean technology used in manufacturing, as well as the fuels, such as fossil fuels and bioenergy, used to power these technologies. It also includes the opportunity cost of finance used to fund capital expenditure.</span>
+<br><br>
+<span class="translate">
+Results are presented as an index from 2011 to 2050 so the user can see how costs are changing over time.
+</span>
+
+<h2 class="translate">Data sources</h2>
+
+<span class="translate">Central estimates:</span> <span class="translate">in most cases, data is from the TIAM-UCL model. We chose this data source because it is a well-respected, widely used variant of the TIMES model with cost data taken from published, open sources. In some instances, appropriate costs data was unavailable, so we used alternative published sources.</span>
+<br><br>
+<span class="translate">High/low estimates:</span> <span class="translate">the cost range reflects the minimum/maximum that costs could be in 2050, based on a range of credible, published studies for 2050.  It does not attempt to place any probability on this range, or say what is most likely. Where high or low costs were not available, costs were inflated or deflated by 20%. Costs change linearly between 2011 and 2050.
+</span>
+<span class="translate">
+The sources and a 'red / amber / green' rating are given for all data in the Global Calculator spreadsheet.
+</span>
+
+<h2 class="translate">Comparing costs to a counterfactual</h2>
+
+<span class="translate">
+The best way of understanding costs is to compare them to a counterfactual pathway. The user can do this using the drop down menu. For example, the 'IEA 6DS (approx.)' is a business as usual pathway.
+</span>
+<br><br>
+<span class="translate">
+If the uncertainty bands between pathways overlap, this means that in some circumstances the user's pathway could be more expensive than the counterfactual, and in other circumstances it could be cheaper.
+</span>
+
+<h2 class="translate">Costs as a % of GDP</h2>
+
+<span class="translate">
+The metric for costs as a % of GDP is calculated as: (average annual cost of the energy system in the user's pathway over period 2011-2050 - average annual cost of the energy system in the counterfactual pathway over 2011-2050) / average annual global GDP over the period 2011-2050 x 100.
+</span>
+
+<h2 class="translate">Limitations</h2>
+
+<span class="translate">
+When interpreting the cost results, please bear in mind these limitations:
+</span>
+
+<ol>
+<li><b class="translate">Costs are extremely uncertain.</b>  <span class="translate">Projecting technology costs out thirty five years into the future is extremely uncertain.  Users are encouraged to look at the high/low cost ranges generated by the Calculator, rather than focusing on the central estimates.
+</span>
+
+<li><b class="translate">Excludes energy security impacts, costs arising from the damaging impacts of climate change, other welfare costs, land and food, and wider macroeconomic impacts.</b>  <span class="translate">The damage costs of climate change could be particularly significant.  Costs also exclude any deployment subsidies or spending or research and development used to help technologies come down their learning curves. Pathways that use land and food choices to reduce emissions may look cheap but there would be costs associated with the actions behind these levers.
+</span>
+
+<li><b class="translate">User driven model, not market based.</b>  <span class="translate">The Global Calculator is an engineering based model, not an economic one. This means that the tool will cost whatever combination of technologies and actions the user specifies - it does not take into account price interactions between supply and demand to determine what actions take place.  
+</span>
+
+<li><b class="translate">Costs are exogenous.</b>  <span class="translate">For most technologies, costs decline over time as they follow a learning curve.  However, because the model is user driven, not market based, costs are exogenous: for example, the cost of an electric vehicle in 2030 in the tool is fixed regardless of whether there is a high or low deployment of electric vehicles in that year. However if the user has beliefs about how they would expect the unit costs of particular technologies to change in their pathway, they can sensitivity test the effect of varying these assumptions in the underlying spreadsheet.
+</span>
+
+<li><b class="translate">US cost assumption.</b>  <span class="translate">The cost estimates are calculated assuming the whole world faces US technology prices.  This simplifying assumption is made because the Global Calculator does not model individual countries.  It is not clear whether this will tend to over or underestimate total costs because in countries where capital costs are higher, operating costs are usually correspondingly lower.
+</span>
+
+<li><b class="translate">Fuel costs are particularly uncertain.</b> <span class="translate">Average and marginal fossil fuel extraction costs and average tax rates levied by oil exporting countries in 2050 are extremely uncertain.  This could result in actual fuel costs being significantly higher or lower than those estimated here.
+</span>
+
+<li><b class="translate">Some costs are missing.</b> <span class="translate">Unfortunately we could not include some costs. This was either owing to time, uncertainty or the potential negligible nature of costs. It was not possible to estimate costs for insulation, transport efficiency, appliance efficiency, fossil fuel efficiency and the greenhouse gas removal levers. For individual technologies we did not include costs for nuclear decommissioning as it is uncertain whether decommissioning would occur before 2050.
+</span>
+
+<li><b class="translate">It is difficult to estimate the total energy system cost without double counting.</b> <span class="translate">The costs of a car, counted in the transport costs, will include the cost of electricity used in the production of the car. The cost of the electricity is also counted in the power sector costs. Our costs do not try to avoid this double counting as to do so would be highly complex. Therefore we present an index of costs over time to show how the costs could change.
+</span>
+
+</ol>
+<h2 class="translate">Further detail</h2>
+
+<span class="translate">For an analysis of the costs of the four Global Calculator 2C pathways (distributed effort, consumer reluctance, low action on forests and consumer activism) relative to the IEA 6DS, please see the costs section of</span> <a target="_blank" class="translate" href="http://www.globalcalculator.org/sites/default/files/Prosperous%20living%20for%20the%20world%20in%202050%20-%20insights%20from%20the%20Global%20Calculator_0.pdf">Prosperous living for the world in 2050: insights from the Global Calculator</a>.  <span class="translate">This is available in a range of languages.
+</span>
+<br><br>
+<span class="translate">For more detailed explanation of the costs methodology, please see the</span> <a target="_blank" class="translate" href="http://www.globalcalculator.org/sites/default/files/Global%20Calculator%20costs%20methodology.pdf">costs methodology paper</a>.  <span class="translate">This is only available in English.</span>
+
+<br><br>
+<span class="translate">
+To view all cost assumptions and references, please see the</span> <a class="translate" target="_blank" href="https://www.gov.uk/government/publications/the-global-calculator">underlying spreadsheet</a>.  <span class="translate">This is only available in English.</span>
+
+<hr size="1" color="lightgray" noshade="noshade">
+
+</table>
+
+</body>
+
+</html>
+
+
