@@ -1496,7 +1496,7 @@ function initTopMenu() {
 		$("#timeline").css("margin-top", timelineTopMargin + budgetOverlap);
  		///		tag LEFT OUT FOR BERND - NOPANELDYNAMICS
 		///		$("#container-2l-navigation").css("padding-left", 20);
-		header.classList.add("top-menu-sticky");
+		$("#top-menu-minimized").addClass("top-menu-sticky");
 		$('#emission-mosaic-1d-legend-sticky div').removeClass("hide");
 	    } else {
 		///		tag LEFT OUT FOR BERND - NOPANELDYNAMICS
@@ -1510,7 +1510,7 @@ function initTopMenu() {
 		$("#timeline").css("margin-top", timelineTopMargin);
 		///		tag LEFT OUT FOR BERND - NOPANELDYNAMICS
 		///		$("#container-2l-navigation").css("padding-left", 320);
-		header.classList.remove("top-menu-sticky");
+		$("#top-menu-minimized").removeClass("top-menu-sticky");
 		$('#emission-mosaic-1d-legend-sticky div').addClass("hide");
 	    }
 

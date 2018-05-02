@@ -423,6 +423,7 @@
         var resizeStart;
         var resizeEnd;
         var wait = 250;
+// commented-out because of IE8
 //        window.addEventListener("resize", function () {
 //            resizeStart = new Date().getMilliseconds();
 //            resizeEnd = resizeStart + wait;
