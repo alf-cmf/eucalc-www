@@ -154,8 +154,8 @@ a:hover {
     color: #27AAE1;
   }
 
-.selectedNavItem { color: #27AAE1; font-weight: plain; }
-.unselectedNavItem { color: #000; font-weight: plain; }
+.selectedNavItem { color: #27AAE1; font-weight: plain; font-size:15px;}
+.unselectedNavItem { color: #000; font-weight: plain; font-size:15px;}
 
 
 

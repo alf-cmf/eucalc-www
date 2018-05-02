@@ -31,7 +31,7 @@ section.module.top-menu {
 }
 
 #container-2l-navigation {
-    padding-left: 320px;
+    padding-left: 20px;
 }
 
 .geography-feedback {
@@ -71,4 +71,5 @@ section.module.top-menu {
 #top-menu-minimized {
     opacity:.85;
     background-color:lightgrey;
+    height: 65px;
 }
