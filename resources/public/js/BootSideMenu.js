@@ -423,17 +423,17 @@
         var resizeStart;
         var resizeEnd;
         var wait = 250;
-        window.addEventListener("resize", function () {
-            resizeStart = new Date().getMilliseconds();
-            resizeEnd = resizeStart + wait;
-            setTimeout(function () {
-                var now = new Date().getMilliseconds();
-                if (now > resizeEnd) {
-                    onResize();
-                }
-            }, wait);
-        }, false);
-
+//        window.addEventListener("resize", function () {
+//            resizeStart = new Date().getMilliseconds();
+//            resizeEnd = resizeStart + wait;
+//            setTimeout(function () {
+//                var now = new Date().getMilliseconds();
+//                if (now > resizeEnd) {
+//                    onResize();
+//                }
+//            }, wait);
+//        }, false);
+//
 
         $.fn.BootSideMenu.open = function () {
             openMenu();
