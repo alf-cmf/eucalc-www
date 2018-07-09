@@ -20,7 +20,7 @@ var emissionSubNavID 	= 1;
 
 function handleOverview2ndLevelNavigation (activeId) {
 
-  // alert ('handleOverview2ndLevelNavigation (' + activeId + ')');
+  alert ('handleOverview2ndLevelNavigation (' + activeId + ')');
 
 /// keep selection state as is since selection does not exist anymore at this level
 ///    for ( var i=1; i<=3; i++)
@@ -33,7 +33,7 @@ function handleOverview2ndLevelNavigation (activeId) {
   deleteRows(tableID);
 
   // hide / show central CO2 budget diagram
-  if (activeId==1) document.getElementById("container_screens_co2_budget").className = 'tabContent hide';
+/////  if (activeId==1) document.getElementById("container_screens_co2_budget").className = 'tabContent hide';
 /// there is no else because there is no corresponding element for other ids than 1
 ///    else             document.getElementById("container_screens_co2_budget").className = '';
 
@@ -50,10 +50,11 @@ function handleOverview2ndLevelNavigation (activeId) {
 
 
     var rowNode = document.createElement("tr");
-    addDivCell (rowNode, "container_dashboard_energy_supply-active-1");
-    addDivCell (rowNode, "container_dashboard_energy_demand-active-1");
-    addDivCell (rowNode, "container_dashboard_ghg_emissions-active-1");
-    addDivCell (rowNode, "container_dashboard_co2_budget-active-1");
+////    addDivCell (rowNode, "container_dashboard_energy_supply-active-1");
+////    addDivCell (rowNode, "container_dashboard_energy_demand-active-1");
+      addDivCell (rowNode, "container_dashboard_ghg_emissions_default");
+      addDivCell (rowNode, "container_dashboard_eu_residential_energy_demand");
+////    addDivCell (rowNode, "container_dashboard_co2_budget-active-1");
 
     document.getElementById("overview-content-table-active-1").appendChild(rowNode);
 //// LEFT OUT FOR 9.5 - NOGLOBCALC - NOTHERMOMETER
@@ -70,10 +71,11 @@ function handleOverview2ndLevelNavigation (activeId) {
 ////    rowNode.appendChild(cellNode);
 ////    document.getElementById("overview-thermometer-table").appendChild(rowNode);
 ////
-    document.getElementById("container_dashboard_energy_supply-active-1").setAttribute("style", "width: 190px; height: 310px");
-    document.getElementById("container_dashboard_energy_demand-active-1").setAttribute("style", "width: 145px; height: 310px");
-    document.getElementById("container_dashboard_ghg_emissions-active-1").setAttribute("style", "width: 370px; height: 310px");
-    document.getElementById("container_dashboard_co2_budget-active-1").setAttribute("style", "width: 120px; height: 310px");
+/////    document.getElementById("container_dashboard_energy_supply-active-1").setAttribute("style", "width: 190px; height: 310px");
+/////    document.getElementById("container_dashboard_energy_demand-active-1").setAttribute("style", "width: 145px; height: 310px");
+      document.getElementById("container_dashboard_ghg_emissions_default").setAttribute("style", "width: 370px; height: 310px");
+      document.getElementById("container_dashboard_eu_residential_energy_demand").setAttribute("style", "width: 370px; height: 410px");
+/////    document.getElementById("container_dashboard_co2_budget-active-1").setAttribute("style", "width: 120px; height: 310px");
 //// LEFT OUT FOR 9.5 - NOGLOBCALC - NOTHERMOMETER
 ////      document.getElementById("container_dashboard_mean_temp-active-1").setAttribute("style", "width: 130px; height: 280px");
 ////    document.getElementById("dashboard-temp-info-active-1").setAttribute("style", "width: 130px");
@@ -98,8 +100,8 @@ function handleOverview2ndLevelNavigation (activeId) {
 ////          + "<div>" + translate ("The temperature change in 2100 for your chosen pathway is estimated by combining IPCC results about the effect of cumulative CO2 emissions with global temperature potentials for three other greenhouse gases (CH4, N2O, and SO2).") + "<br><br>" + translate ("For more details please click here.") + "</div></span>";
 ////
 
-    initDashboardCharts (activeId);
-      updateDashboard();
+      initDashboardCharts ();
+      updateDashboard ();
 //// LEFT OUT FOR 9.5 - NOGLOBCALC - NOCO2BUDGET  
 //// updateCo2BudgetDisplay(chart_dashboard_co2_budget);
       ////
@@ -139,7 +141,6 @@ function handleOverview2ndLevelNavigation (activeId) {
     createSubNavItemRow (tableID, 'overview-emissions-subnav', emissionSubNavID,  1, translate ('Emissions by source'));
     createSubNavItemRow (tableID, 'overview-emissions-subnav', emissionSubNavID,  2, translate ('Emissions by gas'));
     document.getElementById(tableID).setAttribute("style", "width:180px");
-
     handleEmissionSubnavigation (emissionSubNavID);
 
   }
@@ -174,21 +175,21 @@ function handleEnergySubnavigation (activeId) {
   // -------------------------------------------------------------------
   if (activeId == 1) {
 
-    var rowNode = document.createElement("tr");
-    addDivCell (rowNode, "container_energy_1");
-    addDivCell (rowNode, "container_energy_2");
+      var rowNode = document.createElement("tr");
+      addDivCell (rowNode, "container_energy_1");
+      addDivCell (rowNode, "container_energy_2");
 
-    document.getElementById("overview-content-table-active-2").appendChild(rowNode);
-    document.getElementById("container_energy_1").setAttribute("style", "width:330px; height:310px");
-    document.getElementById("container_energy_2").setAttribute("style", "width:330px; height:310px");
+      document.getElementById("overview-content-table-active-2").appendChild(rowNode);
+      document.getElementById("container_energy_1").setAttribute("style", "width:330px; height:310px");
+      document.getElementById("container_energy_2").setAttribute("style", "width:330px; height:310px");
 
-    initEnergyFlowsCharts ();
+      initEnergyFlowsCharts ();
       updateEnergyFlows ();
 
       /// the following is uncool since it targets container_screens_co2_budget!
-    updateCo2BudgetDisplay(chart_screens_co2_budget);
+///    updateCo2BudgetDisplay(chart_screens_co2_budget);
 
-    document.getElementById('sankey-nav-detailed').innerHTML = "";
+      document.getElementById('sankey-nav-detailed').innerHTML = "";
 
 
   }
@@ -235,7 +236,7 @@ function handleEnergySubnavigation (activeId) {
 
       createSankey();
       /// the following is uncool since it targets container_screens_co2_budget!
-    updateCo2BudgetDisplay(chart_screens_co2_budget);
+/////    updateCo2BudgetDisplay(chart_screens_co2_budget);
 
     document.getElementById('sankey-nav-detailed').innerHTML = "- <a href='' onclick='openSankey (); return false;' title = '" + translate("open detailed Sankey diagram of energy flows") + "'>" + translate("Open detailed Sankey") + "</a>";
 
@@ -260,29 +261,28 @@ function handleEmissionSubnavigation (activeId) {
   // emissions by source
   // -------------------------------------------------------------------
   if (activeId==1) {
-    var rowNode = document.createElement("tr");
-    addDivCell (rowNode, "container_emissions_by_source");
-    document.getElementById("overview-content-table-active-3").appendChild(rowNode);
-    document.getElementById("container_emissions_by_source").setAttribute("style", "width: 670px; height: 310px");
+      var rowNode = document.createElement("tr");
+      addDivCell (rowNode, "container_dashboard_ghg_emissions_drilled_down");
+      document.getElementById("overview-content-table-active-3").appendChild(rowNode);
+      document.getElementById("container_dashboard_ghg_emissions_drilled_down").setAttribute("style", "width: 670px; height: 310px");
 
-    initEmissionChartDefault ('container_emissions_by_source');
+      initEmissionChartDrilledDown();
       updateEmissionsDiagramSector();
       /// the following is uncool since it targets container_screens_co2_budget!
-    updateCo2BudgetDisplay(chart_screens_co2_budget);
+    ///updateCo2BudgetDisplay(chart_screens_co2_budget);
   }
   // -------------------------------------------------------------------
   // emissions by gas
   // -------------------------------------------------------------------
   else if (activeId==2) {
     var rowNode = document.createElement("tr");
-    addDivCell (rowNode, "container_emissions_by_gas");
-    document.getElementById("overview-content-table-active-3").appendChild(rowNode);
-    document.getElementById("container_emissions_by_gas").setAttribute("style", "width: 670px; height: 310px");
-
-    initEmissionChartDefault ('container_emissions_by_gas');
+      addDivCell (rowNode, "container_dashboard_ghg_emissions_drilled_down");
+      document.getElementById("overview-content-table-active-3").appendChild(rowNode);
+      document.getElementById("container_dashboard_ghg_emissions_drilled_down").setAttribute("style", "width: 670px; height: 310px");      
+      initEmissionChartDrilledDown();
       updateEmissionsDiagramGas();
       /// the following is uncool since it targets container_screens_co2_budget!
-    updateCo2BudgetDisplay(chart_screens_co2_budget);
+    ///updateCo2BudgetDisplay(chart_screens_co2_budget);
   }
 }
 

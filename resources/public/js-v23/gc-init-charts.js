@@ -1921,6 +1921,13 @@ function initAppliancesCharts () {
   });
 }
 
+function initEmissionChartDrilledDown () {
+
+    chart_dashboard_ghg_emissions_drilled_down = initEmissionChartDefault ('container_dashboard_ghg_emissions_drilled_down');
+
+}
+
+
 
 
 // ***********************************************************
@@ -1941,7 +1948,7 @@ function initAppliancesCharts () {
 
 function initEmissionChartDefault (container) {
 
-    chart_dashboard_ghg_emissions = new Highcharts.Chart({
+    var chart = new Highcharts.Chart({
 
         //loading: { labelStyle: { color: 'white' }, style: {backgroundColor: 'grey'} },
 
@@ -2091,6 +2098,9 @@ function initEmissionChartDefault (container) {
 */
 
     });
+
+    return chart;
+    
 }
 
 
@@ -2102,7 +2112,7 @@ function initEmissionChartDefault (container) {
 // one might have to extend this with the activeTab/selectedTab?! [2018-03-18 Sun 12:45]
 
 
-function initDashboardCharts (activeId) {
+function initDashboardCharts () {
 
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
@@ -2116,235 +2126,236 @@ function initDashboardCharts (activeId) {
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
 
-// in the following case only one active tab is allowed
-    if (activeId == 2) {
-    chart_dashboard_energy_demand = new Highcharts.Chart({
-        credits: { enabled: false },
-        chart: {
-            renderTo: 'container_dashboard_energy_demand' + '-active-' + activeId,
-            marginLeft:5,
-            type: 'column'
-        },
-        title: {
-            style: { font: 'normal 10px "Trebuchet MS", Verdana, sans-serif' },
-            text: translate ('Final energy')
-        },
-        subtitle: {
-            style: { font: 'normal 10px "Trebuchet MS", Verdana, sans-serif' },
-            text: translate ('demand')
-        },
-        legend: {
-            enabled: false,
-            align: 'right',
-            verticalAlign: 'middle',
-            width:130,
-            y: 20,
-            padding:7,
-            itemStyle: { fontSize: '10px' }
-        },
-        exporting: { enabled: false },
-        xAxis: {
-          categories: ['2011', '2050']
-        },
-        yAxis: {
-          minPadding: 0.2,
-          maxPadding: 0.2,
-          title: {
-            enabled: false,
-            style: {
-              fontSize: '9px',
-	      fontWeight: 'normal'
-            },
-            text: translate ('EJ'),
-            margin: 5
-          },
-          labels : { enabled: false },
-          min: 0,
-          max: 2000, 
-          tickInterval: 250
-        },
-        tooltip: {
-          shared: true,
-          style: {
-      	    fontSize: '9px',
-      	    padding: '8px'
-      	  },
-          positioner: function () {  return { x: 5, y: 30 }; },
-          useHTML: true,
-          headerFormat: '{point.key}' + ' (' + translate ('EJ') + ')' + '<table>',
-          pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' +
-          '<td style="text-align: right">{point.y}</td></tr>',
-          footerFormat: '</table>'
-
-        },
-        plotOptions: {
-          column: {
-            stacking: 'normal',
-            dataLabels: {
-              // enabled: true,
-              // color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
-            }
-          }
-        },
-        series: [
-/*
-        {
-          name: 'Losses',
-          color: 'rgba(200, 200, 200, 0.3)', // '#bababa',
-          // borderColor: 'white',
-          // dashStyle: 'dot',
-          data: [50, 50]
-        }, 
-*/
-        {
-          name: translate ('Manufactur.'),
-          color: '#8dd3c7',
-          data: [50, 50]
-        }, {
-          name: translate ('Transport'),
-          color: '#ffffb3',
-          data: [50, 50]
-        }, {
-          name: translate ('Buildings'),
-          color: '#bebada',
-          data: [50, 50]
-        }, {
-          name: translate ('Other'),
-          color: '#fb8072',
-          data: [50, 50]
-        }, {
-          name: translate ('GGR'),
-          color: '#80b1d3',
-          data: [50, 50]
-        }
-        ]
-    });
-
-
-    }
-
-
-
-    // -------------------------------------------------------------------------------------------------------------------
-    // -------------------------------------------------------------------------------------------------------------------
-    // -------------------------------------------------------------------------------------------------------------------
-    // -------------------------------------------------------------------------------------------------------------------
-    //
-    // dashboard: energy supply chart
-    //
-    // -------------------------------------------------------------------------------------------------------------------
-    // -------------------------------------------------------------------------------------------------------------------
-    // -------------------------------------------------------------------------------------------------------------------
-    // -------------------------------------------------------------------------------------------------------------------
-    if (activeId == 2) {
-    chart_dashboard_energy_supply = new Highcharts.Chart({
-        credits: { enabled: false },
-        chart: {
-            renderTo: 'container_dashboard_energy_supply' + '-active-' + activeId,
-            type: 'column'
-            // marginLeft:52,
-            // marginTop:50,
-            // marginBottom:20,
-            // marginRight:140,
-            // marginLeft:40,
-            // zoomType: 'y'
-        },
-        title: {
-            style: { font: 'normal 10px "Trebuchet MS", Verdana, sans-serif' },
-            text: translate ('Primary energy')
-        },
-        subtitle: {
-            style: { font: 'normal 10px "Trebuchet MS", Verdana, sans-serif' },
-            text: translate ('supply')
-        },
-        legend: {
-            enabled: false,
-            align: 'right',
-            verticalAlign: 'middle',
-            width:130,
-            y: 20,
-            padding:7,
-            itemStyle: { fontSize: '10px' }
-        },
-        exporting: { enabled: false },
-        xAxis: {
-          categories: ['2011', '2050']
-        },
-        yAxis: {
-          minPadding: 0.2,
-          maxPadding: 0.2,
-          title: {
-            text: translate ('EJ'),
-            margin: 5
-          },
-          min: 0,
-          max: 2000, 
-          tickInterval: 250
-        },
-
-      tooltip: {
-          shared: true,
-          //valueSuffix: ' EJ',
-          style: {
-      	    fontSize: '9px',
-      	    padding:  '8px'
-      	  },
-          positioner: function () {
-            return { x: 5, y: 30 };
-          },
-          useHTML: true,
-          headerFormat: '{point.key}' + ' (' + translate ('EJ') + ')' + '<table>',
-          pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' +
-          '<td style="text-align: right">{point.y}</td></tr>',
-
-          footerFormat: '</table>'
-        },
-        plotOptions: {
-          column: {
-            stacking: 'normal',
-            dataLabels: {
-              // enabled: true,
-              // color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
-            }
-          }
-        },
-        series: [{
-          name: translate ('Nuclear'),
-          color: '#e41a1c',
-          data: [50, 50]
-        }, {
-          name: translate ('Heat'),
-          color: '#ff7f00',
-          data: [50, 50]
-        }, {
-          name: translate ('Renewables'),
-          color: '#4daf4a',
-          data: [50, 50]
-        }, {
-          name: translate ('Fossil fuel'),
-          color: '#377eb8',
-          data: [50, 50]
-        }
-       ]
-    });
-
-    }
-
+////
+////    chart_dashboard_energy_demand = new Highcharts.Chart({
+////        credits: { enabled: false },
+////        chart: {
+////            renderTo: 'container_dashboard_energy_demand_subscreen_2',
+////            marginLeft:5,
+////            type: 'column'
+////        },
+////        title: {
+////            style: { font: 'normal 10px "Trebuchet MS", Verdana, sans-serif' },
+////            text: translate ('Final energy')
+////        },
+////        subtitle: {
+////            style: { font: 'normal 10px "Trebuchet MS", Verdana, sans-serif' },
+////            text: translate ('demand')
+////        },
+////        legend: {
+////            enabled: false,
+////            align: 'right',
+////            verticalAlign: 'middle',
+////            width:130,
+////            y: 20,
+////            padding:7,
+////            itemStyle: { fontSize: '10px' }
+////        },
+////        exporting: { enabled: false },
+////        xAxis: {
+////          categories: ['2011', '2050']
+////        },
+////        yAxis: {
+////          minPadding: 0.2,
+////          maxPadding: 0.2,
+////          title: {
+////            enabled: false,
+////            style: {
+////              fontSize: '9px',
+////	      fontWeight: 'normal'
+////            },
+////            text: translate ('EJ'),
+////            margin: 5
+////          },
+////          labels : { enabled: false },
+////          min: 0,
+////          max: 2000, 
+////          tickInterval: 250
+////        },
+////        tooltip: {
+////          shared: true,
+////          style: {
+////      	    fontSize: '9px',
+////      	    padding: '8px'
+////      	  },
+////          positioner: function () {  return { x: 5, y: 30 }; },
+////          useHTML: true,
+////          headerFormat: '{point.key}' + ' (' + translate ('EJ') + ')' + '<table>',
+////          pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' +
+////          '<td style="text-align: right">{point.y}</td></tr>',
+////          footerFormat: '</table>'
+////
+////        },
+////        plotOptions: {
+////          column: {
+////            stacking: 'normal',
+////            dataLabels: {
+////              // enabled: true,
+////              // color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+////            }
+////          }
+////        },
+////        series: [
+/////*
+////        {
+////          name: 'Losses',
+////          color: 'rgba(200, 200, 200, 0.3)', // '#bababa',
+////          // borderColor: 'white',
+////          // dashStyle: 'dot',
+////          data: [50, 50]
+////        }, 
+////*/
+////        {
+////          name: translate ('Manufactur.'),
+////          color: '#8dd3c7',
+////          data: [50, 50]
+////        }, {
+////          name: translate ('Transport'),
+////          color: '#ffffb3',
+////          data: [50, 50]
+////        }, {
+////          name: translate ('Buildings'),
+////          color: '#bebada',
+////          data: [50, 50]
+////        }, {
+////          name: translate ('Other'),
+////          color: '#fb8072',
+////          data: [50, 50]
+////        }, {
+////          name: translate ('GGR'),
+////          color: '#80b1d3',
+////          data: [50, 50]
+////        }
+////        ]
+////    });
+////
+////
+////
+////
+////
+////
+////    // -------------------------------------------------------------------------------------------------------------------
+////    // -------------------------------------------------------------------------------------------------------------------
+////    // -------------------------------------------------------------------------------------------------------------------
+////    // -------------------------------------------------------------------------------------------------------------------
+////    //
+////    // dashboard: energy supply chart
+////    //
+////    // -------------------------------------------------------------------------------------------------------------------
+////    // -------------------------------------------------------------------------------------------------------------------
+////    // -------------------------------------------------------------------------------------------------------------------
+////    // -------------------------------------------------------------------------------------------------------------------
+////
+////    chart_dashboard_energy_supply = new Highcharts.Chart({
+////        credits: { enabled: false },
+////        chart: {
+////            renderTo: 'container_dashboard_energy_supply_subscreen_2',
+////            type: 'column'
+////            // marginLeft:52,
+////            // marginTop:50,
+////            // marginBottom:20,
+////            // marginRight:140,
+////            // marginLeft:40,
+////            // zoomType: 'y'
+////        },
+////        title: {
+////            style: { font: 'normal 10px "Trebuchet MS", Verdana, sans-serif' },
+////            text: translate ('Primary energy')
+////        },
+////        subtitle: {
+////            style: { font: 'normal 10px "Trebuchet MS", Verdana, sans-serif' },
+////            text: translate ('supply')
+////        },
+////        legend: {
+////            enabled: false,
+////            align: 'right',
+////            verticalAlign: 'middle',
+////            width:130,
+////            y: 20,
+////            padding:7,
+////            itemStyle: { fontSize: '10px' }
+////        },
+////        exporting: { enabled: false },
+////        xAxis: {
+////          categories: ['2011', '2050']
+////        },
+////        yAxis: {
+////          minPadding: 0.2,
+////          maxPadding: 0.2,
+////          title: {
+////            text: translate ('EJ'),
+////            margin: 5
+////          },
+////          min: 0,
+////          max: 2000, 
+////          tickInterval: 250
+////        },
+////
+////      tooltip: {
+////          shared: true,
+////          //valueSuffix: ' EJ',
+////          style: {
+////      	    fontSize: '9px',
+////      	    padding:  '8px'
+////      	  },
+////          positioner: function () {
+////            return { x: 5, y: 30 };
+////          },
+////          useHTML: true,
+////          headerFormat: '{point.key}' + ' (' + translate ('EJ') + ')' + '<table>',
+////          pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' +
+////          '<td style="text-align: right">{point.y}</td></tr>',
+////
+////          footerFormat: '</table>'
+////        },
+////        plotOptions: {
+////          column: {
+////            stacking: 'normal',
+////            dataLabels: {
+////              // enabled: true,
+////              // color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+////            }
+////          }
+////        },
+////        series: [{
+////          name: translate ('Nuclear'),
+////          color: '#e41a1c',
+////          data: [50, 50]
+////        }, {
+////          name: translate ('Heat'),
+////          color: '#ff7f00',
+////          data: [50, 50]
+////        }, {
+////          name: translate ('Renewables'),
+////          color: '#4daf4a',
+////          data: [50, 50]
+////        }, {
+////          name: translate ('Fossil fuel'),
+////          color: '#377eb8',
+////          data: [50, 50]
+////        }
+////       ]
+////    });
+////
 
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
     //
-    // dashboard: ghg emissions chart
+    // dashboard: ghg emissions charts
     //
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
-    if ((activeId == 1) || (activeId == 3)) {
-	initEmissionChartDefault ('container_dashboard_ghg_emissions' + '-active-' + activeId);
-    }
+
+    chart_dashboard_ghg_emissions_default = initEmissionChartDefault ('container_dashboard_ghg_emissions_default');
+
+    // an eu chart...
+    chart_energy_energy_demand_eu_buildings = initEnergyDemandChart ('container_dashboard_eu_residential_energy_demand');
+    /////    initEmissionChartDefault ('container_dashboard_ghg_emissions_drilled_down');
+
 	
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
@@ -7049,13 +7060,23 @@ function initEnergyFlowsCharts () {
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
-    chart_energy_energy_demand = new Highcharts.Chart({
+    chart_energy_energy_demand = initEnergyDemandChart('container_energy_2');
+
+} // end initEnergyFlowsCharts ()
+
+
+
+
+
+
+function initEnergyDemandChart (container) {
+    var chart = new Highcharts.Chart({
 
         credits: {
            enabled: false
         },
         chart: {
-            renderTo: 'container_energy_2',
+            renderTo: container,
             marginRight:20,
             type: 'area'
         },
@@ -7221,9 +7242,8 @@ function initEnergyFlowsCharts () {
 
     });
 
-
-
-} // end initEnergyFlowsCharts ()
+    return chart;
+}
 
 
 // ***********************************************************

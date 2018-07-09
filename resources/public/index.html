@@ -71,6 +71,8 @@
 <script type="text/javascript" src="js-v23/gc-translation-tables-mandarin-1.js" charset="utf-8"></script>
 <script type="text/javascript" src="js-v23/gc-translation-tables-muliple-1.js" charset="utf-8"></script>
 <script type="text/javascript" src="js-v23/gc-translation-tables-japanese.js" charset="utf-8"></script>
+
+<script type="text/javascript" src="js-v23/eu-utilities.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/BootSideMenu.js" charset="utf-8"></script>
 
 <!--
@@ -1073,6 +1075,7 @@ function setLeverSet (lever_ids, index) {
 <script type="text/javascript">
 
 var ds; // global handle to the current model output dataset
+var eds; // global handle?! to eucalc's current model output dataset
 
 var DEBUG = false; // true;
 
@@ -1102,7 +1105,8 @@ var chart_screens_co2_budget;
 
 var chart_dashboard_energy_demand;
 var chart_dashboard_energy_supply;
-var chart_dashboard_ghg_emissions;
+var chart_dashboard_ghg_emissions_default;
+var chart_dashboard_ghg_emissions_drilled_down;
 var chart_dashboard_temperature_change;
 
 var chart_cc_temperature_change;
@@ -1381,6 +1385,20 @@ $(document).ready(function() {
     // send params to server and fetch the model output
     // -----------------------------------------------------
 
+    leverURL = "http://127.0.0.1:5000/api/v1.0/mock";
+    
+    $.ajax({
+  	url: leverURL,
+  	dataType: 'jsonp'
+    })
+	.done(function(data) {
+	    fetchEuAggregatedData(data)
+	})
+	.fail(function(data) {
+	    alert("failed fetching data from mocked backend: '" +  data + "'");
+	});
+
+
     
     $.ajax({
   	url: cfpsurl,
@@ -1396,12 +1414,12 @@ $(document).ready(function() {
     var refreshIntervalId = null;
     refreshIntervalId = setInterval(function() {
 	if(typeof ds !== 'undefined') {
+	    overviewSubscreenID = 1;
+	    handleOverview2ndLevelNavigation(1);
 	    overviewSubscreenID = 2;
             handleOverview2ndLevelNavigation(2);
 	    overviewSubscreenID = 3;
 	    handleOverview2ndLevelNavigation(3);
-	    overviewSubscreenID = 1;
-	    handleOverview2ndLevelNavigation(1);
 	    clearInterval(refreshIntervalId);
 	}
     }, 1000);
@@ -1419,18 +1437,20 @@ $(document).ready(function() {
     $('#container_dashboard_energy_demand-active-1').width("20px");
     $('#container_dashboard_co2_budget-active-1').width("20px");
 
-//    leverURL = "http://127.0.0.1:5000/api/v1.0/levers";
-//    
-//    $.ajax({
-//  	url: leverURL,
-//  	dataType: 'jsonp'
-//    })
+
+//leverURL = "http://127.0.0.1:5000/api/v1.0/levers";
+//
+//$.ajax({
+//	url: leverURL,
+//	dataType: 'jsonp'
+//})
 //	.then(fetchLeverNames)
 //	.then(initNewLevers)
 //	.fail(function(data) {
 //	    alert("failed fetching lever names from : '" + data + "'");
 //	});
 //
+
 });
 
 
@@ -1862,10 +1882,11 @@ function initUI () {
     // --------------------------------------------------------
     // init charts
     // --------------------------------------------------------
-    initDashboardCharts (1);
-    initDashboardCharts (2);
-    initDashboardCharts (3);
+//alert("got to initDashboardCharts!");
+    initDashboardCharts ();
     
+    initEmissionChartDrilledDown();
+
 
 ////    initGGRCharts ();
 ////    initClimateCharts ();
@@ -1882,7 +1903,7 @@ function initUI () {
     // initMaterialsCharts ();
     // initFoodCharts();
 
-    // initEnergyFlowsCharts();
+   initEnergyFlowsCharts();
     // initCostCharts();
     // initCostOverviewCharts();
 
@@ -1893,6 +1914,7 @@ function initUI () {
 
     // --------------------------------------------------------
     // fetch data to be displayed
+    // now reduced to tooltip init [2018-07-07 Sat 09:44]
     // --------------------------------------------------------
     fetchModelOutput(true);
 
@@ -2999,7 +3021,9 @@ function showLoadingMessage () {
 
   document.getElementById("land-use-warning-info").innerHTML = "<h2><font color='grey'>" + "Loading ...</font></h2>";
 
-  showLoadingMsg (chart_dashboard_ghg_emissions);
+				showLoadingMsg (chart_dashboard_ghg_emissions_default);
+
+				showLoadingMsg (chart_dashboard_ghg_emissions_drilled_down);
   showLoadingMsg (chart_dashboard_energy_demand);
   showLoadingMsg (chart_dashboard_energy_supply);
   showLoadingMsg (chart_dashboard_co2_budget);
@@ -3092,7 +3116,8 @@ function showLoadingMessage () {
 
 function hideLoadingMessage () {
 
-  hideLoadingMsg (chart_dashboard_ghg_emissions);
+				hideLoadingMsg (chart_dashboard_ghg_emissions_default);
+				  hideLoadingMsg (chart_dashboard_ghg_emissions_drilled_down);
   hideLoadingMsg (chart_dashboard_energy_demand);
   hideLoadingMsg (chart_dashboard_energy_supply);
   hideLoadingMsg (chart_dashboard_co2_budget);
@@ -3184,6 +3209,21 @@ function hideLoadingMessage () {
 }
 
 
+function fetchEuAggregatedData(data) {
+
+    // -----------------------------------------------------
+    // store fetched data globally
+    // -----------------------------------------------------
+    eds = data[0];
+
+    // --------------------------------------------------------
+    // init lever tooltips
+    // --------------------------------------------------------
+//    if (doInitSetup) initLeverToolTips ();
+
+}
+
+
 function fetchDataFromLeverSettings(data, doInitSetup) {
 
     // -----------------------------------------------------
@@ -3200,10 +3240,14 @@ function fetchDataFromLeverSettings(data, doInitSetup) {
 
     if (DEBUG) document.getElementById('model-lever-feedback').innerHTML = "<font color='#6D6E71'>" + str + "</font>";
 
+    
     // -----------------------------------------------------
     // update the diagrams
     // -----------------------------------------------------
-    updateResultDisplay();
+    //updateResultDisplay();
+    if (! doInitSetup) {
+	updateResultPage();
+    }
 
     // --------------------------------------------------------
     // init lever tooltips
@@ -3212,9 +3256,11 @@ function fetchDataFromLeverSettings(data, doInitSetup) {
 
 }
 
+
+
 function fetchModelOutput (doInitSetup) {
 
-  // alert ("fetchModelOutput(" + doInitSetup + ")");
+  alert ("fetchModelOutput(" + doInitSetup + ")");
 
   if (USE_DUMMY_DATA) {
 
@@ -3229,8 +3275,8 @@ function fetchModelOutput (doInitSetup) {
     // -----------------------------------------------------
     // update the diagrams
     // -----------------------------------------------------
-    updateResultDisplay();
-
+//    updateResultDisplay();
+      updateResultPage();
     return;
   }
 
@@ -3284,12 +3330,36 @@ function fetchModelOutput (doInitSetup) {
 
 var landUseWarningActive = false;
 
+function updateSubscreen(subscreenId) {
+    overviewSubscreenID = subscreenId;
+//    if(typeof ds !== 'undefined') {
+//	handleOverview2ndLevelNavigation(subscreenId)
+//    };
+    updateResultDisplay();
+} 
+
+function updateResultPage() {
+    var sIds;
+    if (selectedPageID == 'dashboard') {
+	sIds = [1,2,3];
+    }
+    sIds.map(sId => updateSubscreen(sId));
+}
+
+function updateEuResultPage() {
+    var sIds;
+    if (selectedPageID == 'dashboard') {
+	sIds = [1,2,3];
+    }
+    sIds.map(sId => updateSubscreen(sId));
+}
+
 function updateResultDisplay () {
 
   // alert ("URD");
 
   if (ds == null) {
-//    alert ("no data available");
+    alert ("no data available");
     return;
   }
   if (sankeyPopup   != null) hideSankeyPopup();
@@ -3811,7 +3881,7 @@ legend {    color: #ddd; }
     // --------------------------------------------------------
     // init charts
     // --------------------------------------------------------
-    initGGRCharts ();
+//    initGGRCharts ();
   //  initDashboardCharts ();
 /*
     initClimateCharts ();
@@ -3824,8 +3894,8 @@ legend {    color: #ddd; }
     initLandCharts();
 
  */
-
-     updateResultDisplay();
+	  updateResultPage();
+//     updateResultDisplay();
      }
 
 </script>
@@ -4069,7 +4139,9 @@ legend {    color: #ddd; }
       // --------------------------------------------------------------------------------
       // update all diagrams (could be smarter by only touching the visible ones)
       // --------------------------------------------------------------------------------
-      updateResultDisplay ();
+
+	//updateResultDisplay ();
+	updateResultPage();
 
       // --------------------------------------------------------------------------------
       // Stop the browser following the link
@@ -4282,8 +4354,8 @@ legend {    color: #ddd; }
 
 
       selectedPageID = selectedId;
-      updateResultDisplay ();
-
+//      updateResultDisplay ();
+	updateResultPage();
 
       // --------------------------------------------------------------------------------
       // generate updated hyperlink with current params
@@ -4677,7 +4749,8 @@ legend {    color: #ddd; }
 
             <td><div id="container_dashboard_energy_supply-active-1" style="width: 0px; height: 310px"></div>
             <td><div id="container_dashboard_energy_demand-active-1" style="width: 0px; height: 310px"></div>
-            <td><div id="container_dashboard_ghg_emissions-active-1" style="width: 370px; height: 310px"></div>
+	    <td><div id="container_dashboard_ghg_emissions_default" style="width: 370px; height: 310px"></div>
+	    <td><div id="container_dashboard_eu_residential_energy_demand" style="width: 370px; height: 310px"></div>
             <td><div id="container_dashboard_co2_budget-active-1"    style="width: 0px; height: 310px"></div>
         </table>
         <!-- --------------------------- end content table --------------------  -->
@@ -6456,11 +6529,13 @@ Below are some events for which greenhouse gas emissions from human activities h
 		<!-- --------------------------- start content table --------------------  -->
 		<table border=0 id='overview-content-table-active-2'>
 		  <tr>
-
-		    <td><div id="container_dashboard_energy_supply-active-2" style="width: 210px; height: 310px"></div>
-		    <td><div id="container_dashboard_energy_demand-active-2" style="width: 160px; height: 310px"></div>
+<td><div id="container_energy_1"></div><div id="container_energy_2"></div>  
+<!--
+		    <td><div id="container_dashboard_energy_supply_subscreen_2" style="width: 210px; height: 310px"></div>
+		    <td><div id="container_dashboard_energy_demand_subscreen_2" style="width: 160px; height: 310px"></div>
 		    <td><div id="container_dashboard_ghg_emissions-active-2" style="width: 370px; height: 310px"></div>
 		    <td><div id="container_dashboard_co2_budget-active-2"    style="width: 125px; height: 310px"></div>
+-->
 		</table>
 		<!-- --------------------------- end content table --------------------  -->
 
@@ -6518,11 +6593,7 @@ Below are some events for which greenhouse gas emissions from human activities h
 		<!-- --------------------------- start content table --------------------  -->
 		<table border=0 id='overview-content-table-active-3'>
 		  <tr>
-
-		    <td><div id="container_dashboard_energy_supply-active-3" style="width: 210px; height: 310px"></div>
-		    <td><div id="container_dashboard_energy_demand-active-3" style="width: 160px; height: 310px"></div>
-		    <td><div id="container_dashboard_ghg_emissions-active-3" style="width: 370px; height: 310px"></div>
-		    <td><div id="container_dashboard_co2_budget-active-3"    style="width: 125px; height: 310px"></div>
+		    <td><div id="container_dashboard_ghg_emissions_drilled_down"></div>
 		</table>
 		<!-- --------------------------- end content table --------------------  -->
 

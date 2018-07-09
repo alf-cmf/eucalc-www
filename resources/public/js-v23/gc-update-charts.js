@@ -541,167 +541,167 @@ function updateCostBySectorDiagrams () {
 
 }
 
-function updateCostDiagramsDEPREC () {
-
-
-  if (costSubNavID==1) {
-    updateCostOverviewDiagrams ();
-    return;
-  }
-
-  return;
-
-  chart_costs_compare.showLoading();
-  chart_costs_split_capital.showLoading();
-  chart_costs_split_operational.showLoading();
-  chart_costs_split_fuel.showLoading();
-
-
-  //alert ("updateCostDiagrams");
-
-  var cfp = cfpStore[1];
-
-  var names = []; 
-  var high  = []; 
-  var point = []; 
-  var low   = []; 
-
-
-
-
-  names.push ("Total"); 
-  low.push   ( Math.round (ds["costs"]["Total capital and operating costs"][0] - cfp["costs"]["Total capital and operating costs"][0] )); 
-  point.push ( Math.round (ds["costs"]["Total capital and operating costs"][1] - cfp["costs"]["Total capital and operating costs"][1] )); 
-  high.push  ( Math.round (ds["costs"]["Total capital and operating costs"][2] - cfp["costs"]["Total capital and operating costs"][2] )); 
-
-  names.push ("Electricity"); 
-  low.push   ( Math.round (ds["costs"]["Power"][0] - cfp["costs"]["Power"][0] )); 
-  point.push ( Math.round (ds["costs"]["Power"][1] - cfp["costs"]["Power"][1] )); 
-  high.push  ( Math.round (ds["costs"]["Power"][2] - cfp["costs"]["Power"][2] )); 
-  
-  names.push ("Transport"); 
-  low.push   ( Math.round (ds["costs"]["Transport"][0] - cfp["costs"]["Transport"][0] )); 
-  point.push ( Math.round (ds["costs"]["Transport"][1] - cfp["costs"]["Transport"][1] )); 
-  high.push  ( Math.round (ds["costs"]["Transport"][2] - cfp["costs"]["Transport"][2] )); 
-
-  names.push ("Buildings"); 
-  low.push   ( Math.round (ds["costs"]["Buildings"][0] - cfp["costs"]["Buildings"][0] )); 
-  point.push ( Math.round (ds["costs"]["Buildings"][1] - cfp["costs"]["Buildings"][1] )); 
-  high.push  ( Math.round (ds["costs"]["Buildings"][2] - cfp["costs"]["Buildings"][2] )); 
-
-  names.push ("Fuels"); 
-  low.push   ( Math.round (ds["costs"]["Fuels"][0] - cfp ["costs"]["Fuels"][0] )); 
-  point.push ( Math.round (ds["costs"]["Fuels"][1] - cfp ["costs"]["Fuels"][1] )); 
-  high.push  ( Math.round (ds["costs"]["Fuels"][2] - cfp ["costs"]["Fuels"][2] )); 
-
-
-  names.push ("Manufacturing"); 
-  low.push   ( Math.round( ds["costs"]["Manufacturing"][0] - cfp ["costs"]["Manufacturing"][0] )); 
-  point.push ( Math.round( ds["costs"]["Manufacturing"][1] - cfp ["costs"]["Manufacturing"][1] )); 
-  high.push  ( Math.round( ds["costs"]["Manufacturing"][2] - cfp ["costs"]["Manufacturing"][2] )); 
-
-  // -----------------------------------------------------------------
-  // pump data into the cost screen compare chart
-  // -----------------------------------------------------------------
-  chart_costs_compare.xAxis[0].update({categories: names}, true);
-  setDataPoints (chart_costs_compare, 0, point);
-
-
-
-
-  var capital_p  	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var capital_h  	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var capital_l  	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var capital_h_w 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var capital_l_w  	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-  var operating_p	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var operating_h 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var operating_l 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var operating_h_w 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var operating_l_w 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-  var fuel_p  	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var fuel_h  	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var fuel_l  	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var fuel_h_w	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var fuel_l_w	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-  for (var i=0; i<9; i++) {
-    capital_p[i]    = Math.round( ds["costs"]["Costs split ts point"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts point"]["Capital costs (including finance)"][i]);
-    operating_p[i]  = Math.round( ds["costs"]["Costs split ts point"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts point"]["Operating costs"][i]);
-    fuel_p[i]       = Math.round( ds["costs"]["Costs split ts point"]["Fuel costs"][i]   			- cfp["costs"]["Costs split ts point"]["Fuel costs"][i]);
-
-    capital_h[i]    = Math.round( ds["costs"]["Costs split ts high"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts high"]["Capital costs (including finance)"][i]);
-    operating_h[i]  = Math.round( ds["costs"]["Costs split ts high"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts high"]["Operating costs"][i]);
-    fuel_h[i]       = Math.round( ds["costs"]["Costs split ts high"]["Fuel costs"][i]   			- cfp["costs"]["Costs split ts high"]["Fuel costs"][i]);
-
-    capital_l[i]    = Math.round( ds["costs"]["Costs split ts low"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts low"]["Capital costs (including finance)"][i]);
-    operating_l[i]  = Math.round( ds["costs"]["Costs split ts low"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts low"]["Operating costs"][i]);
-    fuel_l[i]	    = Math.round( ds["costs"]["Costs split ts low"]["Fuel costs"][i]   				- cfp["costs"]["Costs split ts low"]["Fuel costs"][i]);
-
-    capital_h_w[i]  = Math.round( ds["costs"]["Costs split ts high"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts low"]["Capital costs (including finance)"][i]);
-    operating_h_w[i]= Math.round( ds["costs"]["Costs split ts high"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts low"]["Operating costs"][i]);
-    fuel_h_w[i]     = Math.round( ds["costs"]["Costs split ts high"]["Fuel costs"][i]   			- cfp["costs"]["Costs split ts low"]["Fuel costs"][i]);
-
-    capital_l_w[i]  = Math.round( ds["costs"]["Costs split ts low"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts high"]["Capital costs (including finance)"][i]);
-    operating_l_w[i]= Math.round( ds["costs"]["Costs split ts low"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts high"]["Operating costs"][i]);
-    fuel_l_w[i]	    = Math.round( ds["costs"]["Costs split ts low"]["Fuel costs"][i]   				- cfp["costs"]["Costs split ts high"]["Fuel costs"][i]);
-  }
-  // -----------------------------------------------------------------
-  // pump data into the cost screen split capital chart
-  // -----------------------------------------------------------------
-  setDataPoints (chart_costs_split_capital, 0, capital_p);
-  $.each(chart_costs_split_capital.series[1].data, function (i, point) {
-    point.update([capital_l_w[i], capital_h_w[i]], false);
-  });
-  $.each(chart_costs_split_capital.series[2].data, function (i, point) {
-    point.update([capital_l[i], capital_h[i]], false);
-  });
-
-  // -----------------------------------------------------------------
-  // pump data into the cost screen split operational chart
-  // -----------------------------------------------------------------
-  setDataPoints (chart_costs_split_operational, 0, operating_p);
-  $.each(chart_costs_split_operational.series[1].data, function (i, point) {
-    point.update([operating_l_w[i], operating_h_w[i]], false);
-  });
-  $.each(chart_costs_split_operational.series[2].data, function (i, point) {
-    point.update([operating_l[i], operating_h[i]], false);
-  });
-
-  // -----------------------------------------------------------------
-  // pump data into the cost screen split fuel chart
-  // -----------------------------------------------------------------
-  setDataPoints (chart_costs_split_fuel, 0, fuel_p);
-  $.each(chart_costs_split_fuel.series[1].data, function (i, point) {
-    point.update([fuel_l_w[i], fuel_h_w[i]], false);
-  });
-  $.each(chart_costs_split_fuel.series[2].data, function (i, point) {
-    point.update([fuel_l[i], fuel_h[i]], false);
-  });
-
-
-
-  // -----------------------------------------------------
-  // refresh charts
-  // -----------------------------------------------------
-  chart_costs_compare.redraw(); 
-  chart_costs_split_capital.redraw();
-  chart_costs_split_operational.redraw();
-  chart_costs_split_fuel.redraw();
-
-
-
-
-  chart_costs_compare.hideLoading();
-  chart_costs_split_capital.hideLoading();
-  chart_costs_split_operational.hideLoading();
-  chart_costs_split_fuel.hideLoading();
-
-
-} // end updateCosts
-
+/////function updateCostDiagramsDEPREC () {
+/////
+/////
+/////  if (costSubNavID==1) {
+/////    updateCostOverviewDiagrams ();
+/////    return;
+/////  }
+/////
+/////  return;
+/////
+/////  chart_costs_compare.showLoading();
+/////  chart_costs_split_capital.showLoading();
+/////  chart_costs_split_operational.showLoading();
+/////  chart_costs_split_fuel.showLoading();
+/////
+/////
+/////  //alert ("updateCostDiagrams");
+/////
+/////  var cfp = cfpStore[1];
+/////
+/////  var names = []; 
+/////  var high  = []; 
+/////  var point = []; 
+/////  var low   = []; 
+/////
+/////
+/////
+/////
+/////  names.push ("Total"); 
+/////  low.push   ( Math.round (ds["costs"]["Total capital and operating costs"][0] - cfp["costs"]["Total capital and operating costs"][0] )); 
+/////  point.push ( Math.round (ds["costs"]["Total capital and operating costs"][1] - cfp["costs"]["Total capital and operating costs"][1] )); 
+/////  high.push  ( Math.round (ds["costs"]["Total capital and operating costs"][2] - cfp["costs"]["Total capital and operating costs"][2] )); 
+/////
+/////  names.push ("Electricity"); 
+/////  low.push   ( Math.round (ds["costs"]["Power"][0] - cfp["costs"]["Power"][0] )); 
+/////  point.push ( Math.round (ds["costs"]["Power"][1] - cfp["costs"]["Power"][1] )); 
+/////  high.push  ( Math.round (ds["costs"]["Power"][2] - cfp["costs"]["Power"][2] )); 
+/////  
+/////  names.push ("Transport"); 
+/////  low.push   ( Math.round (ds["costs"]["Transport"][0] - cfp["costs"]["Transport"][0] )); 
+/////  point.push ( Math.round (ds["costs"]["Transport"][1] - cfp["costs"]["Transport"][1] )); 
+/////  high.push  ( Math.round (ds["costs"]["Transport"][2] - cfp["costs"]["Transport"][2] )); 
+/////
+/////  names.push ("Buildings"); 
+/////  low.push   ( Math.round (ds["costs"]["Buildings"][0] - cfp["costs"]["Buildings"][0] )); 
+/////  point.push ( Math.round (ds["costs"]["Buildings"][1] - cfp["costs"]["Buildings"][1] )); 
+/////  high.push  ( Math.round (ds["costs"]["Buildings"][2] - cfp["costs"]["Buildings"][2] )); 
+/////
+/////  names.push ("Fuels"); 
+/////  low.push   ( Math.round (ds["costs"]["Fuels"][0] - cfp ["costs"]["Fuels"][0] )); 
+/////  point.push ( Math.round (ds["costs"]["Fuels"][1] - cfp ["costs"]["Fuels"][1] )); 
+/////  high.push  ( Math.round (ds["costs"]["Fuels"][2] - cfp ["costs"]["Fuels"][2] )); 
+/////
+/////
+/////  names.push ("Manufacturing"); 
+/////  low.push   ( Math.round( ds["costs"]["Manufacturing"][0] - cfp ["costs"]["Manufacturing"][0] )); 
+/////  point.push ( Math.round( ds["costs"]["Manufacturing"][1] - cfp ["costs"]["Manufacturing"][1] )); 
+/////  high.push  ( Math.round( ds["costs"]["Manufacturing"][2] - cfp ["costs"]["Manufacturing"][2] )); 
+/////
+/////  // -----------------------------------------------------------------
+/////  // pump data into the cost screen compare chart
+/////  // -----------------------------------------------------------------
+/////  chart_costs_compare.xAxis[0].update({categories: names}, true);
+/////  setDataPoints (chart_costs_compare, 0, point);
+/////
+/////
+/////
+/////
+/////  var capital_p  	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var capital_h  	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var capital_l  	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var capital_h_w 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var capital_l_w  	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////
+/////  var operating_p	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var operating_h 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var operating_l 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var operating_h_w 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var operating_l_w 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////
+/////  var fuel_p  	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var fuel_h  	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var fuel_l  	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var fuel_h_w	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////  var fuel_l_w	 	= [0, 0, 0, 0, 0, 0, 0, 0, 0];
+/////
+/////  for (var i=0; i<9; i++) {
+/////    capital_p[i]    = Math.round( ds["costs"]["Costs split ts point"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts point"]["Capital costs (including finance)"][i]);
+/////    operating_p[i]  = Math.round( ds["costs"]["Costs split ts point"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts point"]["Operating costs"][i]);
+/////    fuel_p[i]       = Math.round( ds["costs"]["Costs split ts point"]["Fuel costs"][i]   			- cfp["costs"]["Costs split ts point"]["Fuel costs"][i]);
+/////
+/////    capital_h[i]    = Math.round( ds["costs"]["Costs split ts high"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts high"]["Capital costs (including finance)"][i]);
+/////    operating_h[i]  = Math.round( ds["costs"]["Costs split ts high"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts high"]["Operating costs"][i]);
+/////    fuel_h[i]       = Math.round( ds["costs"]["Costs split ts high"]["Fuel costs"][i]   			- cfp["costs"]["Costs split ts high"]["Fuel costs"][i]);
+/////
+/////    capital_l[i]    = Math.round( ds["costs"]["Costs split ts low"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts low"]["Capital costs (including finance)"][i]);
+/////    operating_l[i]  = Math.round( ds["costs"]["Costs split ts low"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts low"]["Operating costs"][i]);
+/////    fuel_l[i]	    = Math.round( ds["costs"]["Costs split ts low"]["Fuel costs"][i]   				- cfp["costs"]["Costs split ts low"]["Fuel costs"][i]);
+/////
+/////    capital_h_w[i]  = Math.round( ds["costs"]["Costs split ts high"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts low"]["Capital costs (including finance)"][i]);
+/////    operating_h_w[i]= Math.round( ds["costs"]["Costs split ts high"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts low"]["Operating costs"][i]);
+/////    fuel_h_w[i]     = Math.round( ds["costs"]["Costs split ts high"]["Fuel costs"][i]   			- cfp["costs"]["Costs split ts low"]["Fuel costs"][i]);
+/////
+/////    capital_l_w[i]  = Math.round( ds["costs"]["Costs split ts low"]["Capital costs (including finance)"][i] 	- cfp["costs"]["Costs split ts high"]["Capital costs (including finance)"][i]);
+/////    operating_l_w[i]= Math.round( ds["costs"]["Costs split ts low"]["Operating costs"][i]   		  	- cfp["costs"]["Costs split ts high"]["Operating costs"][i]);
+/////    fuel_l_w[i]	    = Math.round( ds["costs"]["Costs split ts low"]["Fuel costs"][i]   				- cfp["costs"]["Costs split ts high"]["Fuel costs"][i]);
+/////  }
+/////  // -----------------------------------------------------------------
+/////  // pump data into the cost screen split capital chart
+/////  // -----------------------------------------------------------------
+/////  setDataPoints (chart_costs_split_capital, 0, capital_p);
+/////  $.each(chart_costs_split_capital.series[1].data, function (i, point) {
+/////    point.update([capital_l_w[i], capital_h_w[i]], false);
+/////  });
+/////  $.each(chart_costs_split_capital.series[2].data, function (i, point) {
+/////    point.update([capital_l[i], capital_h[i]], false);
+/////  });
+/////
+/////  // -----------------------------------------------------------------
+/////  // pump data into the cost screen split operational chart
+/////  // -----------------------------------------------------------------
+/////  setDataPoints (chart_costs_split_operational, 0, operating_p);
+/////  $.each(chart_costs_split_operational.series[1].data, function (i, point) {
+/////    point.update([operating_l_w[i], operating_h_w[i]], false);
+/////  });
+/////  $.each(chart_costs_split_operational.series[2].data, function (i, point) {
+/////    point.update([operating_l[i], operating_h[i]], false);
+/////  });
+/////
+/////  // -----------------------------------------------------------------
+/////  // pump data into the cost screen split fuel chart
+/////  // -----------------------------------------------------------------
+/////  setDataPoints (chart_costs_split_fuel, 0, fuel_p);
+/////  $.each(chart_costs_split_fuel.series[1].data, function (i, point) {
+/////    point.update([fuel_l_w[i], fuel_h_w[i]], false);
+/////  });
+/////  $.each(chart_costs_split_fuel.series[2].data, function (i, point) {
+/////    point.update([fuel_l[i], fuel_h[i]], false);
+/////  });
+/////
+/////
+/////
+/////  // -----------------------------------------------------
+/////  // refresh charts
+/////  // -----------------------------------------------------
+/////  chart_costs_compare.redraw(); 
+/////  chart_costs_split_capital.redraw();
+/////  chart_costs_split_operational.redraw();
+/////  chart_costs_split_fuel.redraw();
+/////
+/////
+/////
+/////
+/////  chart_costs_compare.hideLoading();
+/////  chart_costs_split_capital.hideLoading();
+/////  chart_costs_split_operational.hideLoading();
+/////  chart_costs_split_fuel.hideLoading();
+/////
+/////
+/////} // end updateCosts
+/////
 
 
 
@@ -731,12 +731,12 @@ function getYearForReachingTresholdValue (years, dataset, treshold) {
  
 
 function updateEmissionsDiagramDefault () {
-
+    if (DEBUG) alert('updateEmissionsDiagramDefault');
     // -----------------------------------------------------------------
     // remove all time series
     // -----------------------------------------------------------------
-    while(chart_dashboard_ghg_emissions.series.length > 0)
-      chart_dashboard_ghg_emissions.series[0].remove(true);
+    while(chart_dashboard_ghg_emissions_default.series.length > 0)
+      chart_dashboard_ghg_emissions_default.series[0].remove(true);
 
     // -----------------------------------------------------------------
     // compile values from 1990 to 2050 for series 0   
@@ -795,7 +795,7 @@ function updateEmissionsDiagramDefault () {
       ts_from_2050_2100[i][1] = roundValue (vals_from_2050_to_2100[i] ); 
 
 
-    chart_dashboard_ghg_emissions.addSeries({                        
+    chart_dashboard_ghg_emissions_default.addSeries({                        
       name: translate ('Total annual GHG emissions'),
       color: '#bdbdbd',
       type: 'line',
@@ -804,7 +804,7 @@ function updateEmissionsDiagramDefault () {
       data: ts_from_1990_2050
     });
 
-    chart_dashboard_ghg_emissions.addSeries({                        
+    chart_dashboard_ghg_emissions_default.addSeries({                        
       name: translate ('Total annual GHG emissions') + '<br>' + translate ('(trajectory)'),
       color: '#dddddd',
       dashStyle: 'ShortDot',
@@ -912,9 +912,9 @@ function updateEmissionsDiagramDefault () {
       max: 2100 
    });
 */
-  chart_dashboard_ghg_emissions.setTitle({ text: translate ('Global GHG emissions per year') });
+  chart_dashboard_ghg_emissions_default.setTitle({ text: translate ('Global GHG emissions per year') });
 //  chart_dashboard_ghg_emissions.setTitle(null, { text: 'Cumulative CO2 emissions by 2100: ' + cumEmiss + ' GT' });
-  chart_dashboard_ghg_emissions.setTitle(null, { text: '' });
+  chart_dashboard_ghg_emissions_default.setTitle(null, { text: '' });
 }
 
 
@@ -943,12 +943,12 @@ function getTS_1990_2100 (vals_from_1990_to_2100) {
 }
 
 function updateEmissionsDiagramSector () {
-
+    alert('updateEmissionsDiagramSector');
     // -----------------------------------------------------------------
     // remove all time series
     // -----------------------------------------------------------------
-    while(chart_dashboard_ghg_emissions.series.length > 0)
-      chart_dashboard_ghg_emissions.series[0].remove(true);
+    while(chart_dashboard_ghg_emissions_drilled_down.series.length > 0)
+      chart_dashboard_ghg_emissions_drilled_down.series[0].remove(true);
 
 
     var hasValuesPosLandUse 	= false;
@@ -1039,80 +1039,80 @@ function updateEmissionsDiagramSector () {
 
 
     if (hasValuesPosLandUse)
-      chart_dashboard_ghg_emissions.addSeries({                        
+      chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
         name: translate (landUseNamePos),
         stack: 0,       color: '#a6d854',      stacking: 'normal',      marker: { radius: 2 },
         data: getTS_1990_2050 (valuesPosLandUse)
       });
     if (hasValuesNegLandUse)
-      chart_dashboard_ghg_emissions.addSeries({                        
+      chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
         name: translate (landUseNameNeg),
         stack: 1,       color: '#a6d854',      stacking: 'normal',      marker: { radius: 2 },
         data: getTS_1990_2050 (valuesNegLandUse)
       });
 
     if (hasValuesPosFuelComb)
-      chart_dashboard_ghg_emissions.addSeries({                        
+      chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
         name: translate (fuelCombNamePos),
         stack: 0,      color: '#fc8d62',      stacking: 'normal',
         marker: { radius: 2 },
         data: getTS_1990_2050 (valuesPosFuelComb)
       });
     if (hasValuesNegFuelComb)
-      chart_dashboard_ghg_emissions.addSeries({                        
+      chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
         name: translate (fuelCombNameNeg),
         stack: 1,       color: '#fc8d62',      stacking: 'normal',
         marker: { radius: 2 },
         data: getTS_1990_2050 (valuesNegFuelComb)
       });
 
-    chart_dashboard_ghg_emissions.addSeries({                        
+    chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
       name: translate ('Fugitive emissions from fuels'),
       stack: 0,      stacking: 'normal',      marker: { radius: 2 },
       color: '#8da0cb',
       data: getTS_1990_2050 (ds["dashboard"]["by IPCC sector"]["Global Fugitive Emissions from Fuels"])
     });
 
-    chart_dashboard_ghg_emissions.addSeries({                        
+    chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
       name: translate ('Industrial processes'),
       stack: 0,      stacking: 'normal',      marker: { radius: 2 },
       color: '#e78ac3',
       data: getTS_1990_2050 (ds["dashboard"]["by IPCC sector"]["Global Industrial Processes"])
     });
-    chart_dashboard_ghg_emissions.addSeries({                        
+    chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
       name: translate ('Solvent and other product use'),
       stack: 0,      stacking: 'normal',      marker: { radius: 2 },
       color: '#ffd92f',
       data: getTS_1990_2050 (ds["dashboard"]["by IPCC sector"]["Global Solvent and Other Product Use"])
     });
-    chart_dashboard_ghg_emissions.addSeries({                        
+    chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
       name: translate ('Agriculture'),
       stack: 0,      stacking: 'normal',      marker: { radius: 2 },
       color: '#66c2a5',
       data: getTS_1990_2050 (ds["dashboard"]["by IPCC sector"]["Global Agriculture"])
     });
 
-    chart_dashboard_ghg_emissions.addSeries({                        
+    chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
       name: translate ('Waste'),
       stack: 0,      stacking: 'normal',      marker: { radius: 2 },
       color: '#b3b3b3	',
       data: getTS_1990_2050 (ds["dashboard"]["by IPCC sector"]["Global Waste"])
     });
     if (hasValuesPosOther) 
-      chart_dashboard_ghg_emissions.addSeries({                        
+      chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
         name: translate (otherNamePos),
         stack: 0,       color: '#e5c494',      stacking: 'normal',      marker: { radius: 2 },
         data: getTS_1990_2050 (valuesPosOther)
       });
     if (hasValuesNegOther) 
-      chart_dashboard_ghg_emissions.addSeries({                        
+      chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
         name: translate (otherNameNeg),
         stack: 1,       color: '#e5c494',      stacking: 'normal',      marker: { radius: 2 },
         data: getTS_1990_2050 (valuesNegOther)
       });
 
 
-    chart_dashboard_ghg_emissions.addSeries({                        
+    chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
       name: translate ('Net emissions'),
       stack: 1,       
       color: 'white',
@@ -1163,7 +1163,7 @@ function updateEmissionsDiagramSector () {
   if (maxYear == 2100) index = 1;
   var cumEmiss = Math.round ( ds["dashboard"]["cum GHG emissions projected"][index]  );
 
-  chart_dashboard_ghg_emissions.setTitle({ text: translate ('Global GHG emissions per year by source') });
+  chart_dashboard_ghg_emissions_drilled_down.setTitle({ text: translate ('Global GHG emissions per year by source') });
 //  chart_dashboard_ghg_emissions.setTitle(null, { text: 'Cumulative CO2 emissions by 2100: ' + cumEmiss + ' GT' });
 
 
@@ -1173,12 +1173,12 @@ function updateEmissionsDiagramSector () {
 
 function updateEmissionsDiagramGas () {
 
-
+alert('updateEmissionsDiagramGas');
     // -----------------------------------------------------------------
     // remove all time series
     // -----------------------------------------------------------------
-    while(chart_dashboard_ghg_emissions.series.length > 0)
-      chart_dashboard_ghg_emissions.series[0].remove(true);
+    while(chart_dashboard_ghg_emissions_drilled_down.series.length > 0)
+      chart_dashboard_ghg_emissions_drilled_down.series[0].remove(true);
 
 
     var hasValuesPosCO2	= false;
@@ -1215,13 +1215,13 @@ function updateEmissionsDiagramGas () {
 
 
     if (hasValuesPosCO2) 
-      chart_dashboard_ghg_emissions.addSeries({                        
+      chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
         name: translate (co2NamePos),
         stack: 0,       color: '#abdda4',      stacking: 'normal',      marker: { radius: 2 },
         data: getTS_1990_2100 (valuesPosCO2)
       });
     if (hasValuesNegCO2)
-      chart_dashboard_ghg_emissions.addSeries({                        
+      chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
         name: translate (co2NameNeg),
         stack: 1,       color: '#abdda4',      stacking: 'normal',      marker: { radius: 2 },
         data: getTS_1990_2100 (valuesNegCO2)
@@ -1249,13 +1249,13 @@ function updateEmissionsDiagramGas () {
 // alert (ds["dashboard"]["by gas"]["NH4"])
 // alert (ds["dashboard"]["by gas"]["CH4"])
 
-    chart_dashboard_ghg_emissions.addSeries({                        
+    chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
       // name: 'N2O',
       name: translate ('Nitrous oxide'),
       stack: 0,      color: '#fec44f',      stacking: 'normal',      marker: { radius: 2 },
       data: getTS_1990_2100 (ds["dashboard"]["by gas"]["N2O"])
     });
-    chart_dashboard_ghg_emissions.addSeries({                        
+    Chart_dashboard_ghg_emissions_drilled_down.addSeries({                        
       name: translate ('Methane'),
       stack: 0,      color: '#43a2ca',      stacking: 'normal',      marker: { radius: 2 },
       data: getTS_1990_2100 (ds["dashboard"]["by gas"]["CH4"])
@@ -1267,75 +1267,24 @@ function updateEmissionsDiagramGas () {
   if (maxYear == 2100) index = 1;
   var cumEmiss = Math.round ( ds["dashboard"]["cum GHG emissions projected"][index] );
 
-  chart_dashboard_ghg_emissions.setTitle({ text: translate ('Global GHG emissions per year by gas') });
+  chart_dashboard_ghg_emissions_drilled_down.setTitle({ text: translate ('Global GHG emissions per year by gas') });
   // chart_dashboard_ghg_emissions.setTitle(null, { text: 'Cumulative CO2 emissions by 2100: ' + cumEmiss + ' GT' });
 }
 
 
 
 function updateDashboard () {
-
-  //alert (chart_dashboard_energy_demand == null);
-
-    // -----------------------------------------------------
-    // pump  data into the dashboard's energy demand chart
-    // -----------------------------------------------------
-/*
-    setDataPoints (chart_dashboard_energy_demand, 0, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Losses"]));
-    setDataPoints (chart_dashboard_energy_demand, 1, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Manufacturing"]));
-    setDataPoints (chart_dashboard_energy_demand, 2, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Transport"]));
-    setDataPoints (chart_dashboard_energy_demand, 3, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Residential, public and commercial"]));
-    setDataPoints (chart_dashboard_energy_demand, 4, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Other end uses"]));
-    setDataPoints (chart_dashboard_energy_demand, 5, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Greenhouse gas removal"]));
-*/
-    setDataPoints (chart_dashboard_energy_demand, 0, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Manufacturing"]));
-    setDataPoints (chart_dashboard_energy_demand, 1, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Transport"]));
-    setDataPoints (chart_dashboard_energy_demand, 2, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Residential, public and commercial"]));
-    setDataPoints (chart_dashboard_energy_demand, 3, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Other end uses"]));
-    setDataPoints (chart_dashboard_energy_demand, 4, roundArrayValues1 (ds["dashboard"]["energy demand 2050"]["Greenhouse gas removal"]));
-
-    // -----------------------------------------------------------------
-    // pump  data into the dashboard's energy supply chart
-    // -----------------------------------------------------------------
-/*
-    setDataPoints (chart_dashboard_energy_supply, 0, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global nuclear fission"])); 
-    setDataPoints (chart_dashboard_energy_supply, 1, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global solar, wind, wave and tidal"])); 
-    setDataPoints (chart_dashboard_energy_supply, 2, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global heat"])); 
-    setDataPoints (chart_dashboard_energy_supply, 3, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global geothermal"]));  
-    setDataPoints (chart_dashboard_energy_supply, 4, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global hydro"]));  
-    setDataPoints (chart_dashboard_energy_supply, 5, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global bioenergy and waste"]));
-    setDataPoints (chart_dashboard_energy_supply, 6, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global coal and peat"])); 
-    setDataPoints (chart_dashboard_energy_supply, 7, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global oil"]));  
-    setDataPoints (chart_dashboard_energy_supply, 8, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global gas"]));  
-*/
-
-    var fossilFuel = ds["dashboard"]["energy supply 2050"]["Global coal and peat"].slice(0);
-    for (var i=0; i<fossilFuel.length; i++) {
-      fossilFuel[i] += ds["dashboard"]["energy supply 2050"]["Global oil"][i];
-      fossilFuel[i] += ds["dashboard"]["energy supply 2050"]["Global gas"][i];
-    }
-
-    var renewables = ds["dashboard"]["energy supply 2050"]["Global solar, wind, wave and tidal"].slice(0);
-    for (var i=0; i<renewables.length; i++) {
-      renewables[i] += ds["dashboard"]["energy supply 2050"]["Global geothermal"][i];
-      renewables[i] += ds["dashboard"]["energy supply 2050"]["Global hydro"][i];
-      renewables[i] += ds["dashboard"]["energy supply 2050"]["Global bioenergy and waste"][i];
-    }
-
-    setDataPoints (chart_dashboard_energy_supply, 0, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global nuclear fission"])); 
-    setDataPoints (chart_dashboard_energy_supply, 1, roundArrayValues1 (ds["dashboard"]["energy supply 2050"]["Global heat"])); 
-    setDataPoints (chart_dashboard_energy_supply, 2, roundArrayValues1 (renewables)); 
-    setDataPoints (chart_dashboard_energy_supply, 3, roundArrayValues1 (fossilFuel)); 
-
+    alert('updateDashboard');
 
     // -----------------------------------------------------------------
     // update the dashboard's ghg emissions chart
     // -----------------------------------------------------------------
     if      (dashBoardSubsetID == 1) updateEmissionsDiagramDefault();
-    else if (dashBoardSubsetID == 2) updateEmissionsDiagramSector();
-    else if (dashBoardSubsetID == 3) updateEmissionsDiagramGas();
+    else if (dashBoardSubsetID == 2) {alert("get unreachable");updateEmissionsDiagramSector();}
+    else if (dashBoardSubsetID == 3) {alert("and unreachable");updateEmissionsDiagramGas();}
  
-
+    updateEuResidentialEnergyDemand();
+    
     // -----------------------------------------------------
     // hide loading messages
     // -----------------------------------------------------
@@ -1346,11 +1295,13 @@ function updateDashboard () {
     // -----------------------------------------------------
     // refresh charts
     // -----------------------------------------------------
-    chart_dashboard_energy_demand.redraw(); // refresh energy demand chart
-    chart_dashboard_energy_supply.redraw(); // refresh energy supply chart
+//    chart_dashboard_energy_demand.redraw(); // refresh energy demand chart
+//    chart_dashboard_energy_supply.redraw(); // refresh energy supply chart
 
     
-    chart_dashboard_ghg_emissions.redraw(); // refresh ghg emissions chart
+    chart_dashboard_ghg_emissions_default.redraw(); // refresh ghg emissions chart
+    chart_energy_energy_demand_eu_buildings.redraw();
+    
 
 
   // -----------------------------------------------------
@@ -1362,6 +1313,26 @@ function updateDashboard () {
 
 } // end updateDashboard
 
+function updateEuResidentialEnergyDemand () {
+
+    while(chart_energy_energy_demand_eu_buildings.series.length > 0) 
+	chart_energy_energy_demand_eu_buildings.series[0].remove(true);
+	
+    country_names = getEuDsCountries();
+    country_iterator = country_names.map(name => country_names.indexOf(name))
+    country_series = country_names.map(country => getEuDsSeries(country));
+    country_iterator.map(country_index => chart_energy_energy_demand_eu_buildings.addSeries(
+	{
+	    name: country_names[country_index],
+	    stack: 0,
+	    stacking: 'normal',
+	    marker: { radius: 2 },
+	    data: country_series[country_index]
+	}
+    ));   
+    chart_energy_energy_demand_eu_buildings.setTitle({ text: "EU-wide "+ getEuDsTitle()});
+    
+}
 
 
 
@@ -3110,7 +3081,8 @@ function updateManufacturing() {
     setDataPoints (chart_manufacturing_energy_consumption_observed, 0, roundArrayValues1 (ds["manufacturing"]["energy consumption historic"]["Total"]));
 
 /*
-    // handle NO DATA FROM NAMED RANGE
+    // handle
+ NO DATA FROM NAMED RANGE
     chart_manufacturing_energy_consumption_observed.series[0].hide();
     chart_manufacturing_energy_consumption_observed.renderer.text('No data for this',  70, 150).attr({ zIndex: 2 }).css({ color: '#C0C0C0',fontSize: '10px'}).add();
     chart_manufacturing_energy_consumption_observed.renderer.text('chart available',   70, 170).attr({ zIndex: 2 }).css({ color: '#C0C0C0',fontSize: '10px'}).add();
@@ -3781,6 +3753,9 @@ function updateBioenergy () {
 
 
 } // end updateBioenergy
+
+
+
 
 /* ******************************************************
  *                                                      *
