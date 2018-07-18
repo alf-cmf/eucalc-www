@@ -731,7 +731,7 @@ function getYearForReachingTresholdValue (years, dataset, treshold) {
  
 
 function updateEmissionsDiagramDefault () {
-    if (DEBUG) alert('updateEmissionsDiagramDefault');
+    if (CHART_DEBUG) alert('updateEmissionsDiagramDefault');
     // -----------------------------------------------------------------
     // remove all time series
     // -----------------------------------------------------------------
@@ -943,7 +943,7 @@ function getTS_1990_2100 (vals_from_1990_to_2100) {
 }
 
 function updateEmissionsDiagramSector () {
-    alert('updateEmissionsDiagramSector');
+    if (CHART_DEBUG) alert('updateEmissionsDiagramSector');
     // -----------------------------------------------------------------
     // remove all time series
     // -----------------------------------------------------------------
@@ -1173,7 +1173,7 @@ function updateEmissionsDiagramSector () {
 
 function updateEmissionsDiagramGas () {
 
-alert('updateEmissionsDiagramGas');
+    if (CHART_DEBUG) alert('updateEmissionsDiagramGas');
     // -----------------------------------------------------------------
     // remove all time series
     // -----------------------------------------------------------------
@@ -1274,15 +1274,15 @@ alert('updateEmissionsDiagramGas');
 
 
 function updateDashboard () {
-    alert('updateDashboard');
+    if (CHART_DEBUG) alert('updateDashboard');
 
-    // -----------------------------------------------------------------
-    // update the dashboard's ghg emissions chart
-    // -----------------------------------------------------------------
-    if      (dashBoardSubsetID == 1) updateEmissionsDiagramDefault();
-    else if (dashBoardSubsetID == 2) {alert("get unreachable");updateEmissionsDiagramSector();}
-    else if (dashBoardSubsetID == 3) {alert("and unreachable");updateEmissionsDiagramGas();}
- 
+//    // -----------------------------------------------------------------
+//    // update the dashboard's ghg emissions chart
+//    // -----------------------------------------------------------------
+//    if      (dashBoardSubsetID == 1) updateEmissionsDiagramDefault();
+//    else if (dashBoardSubsetID == 2) {alert("get unreachable");updateEmissionsDiagramSector();}
+//    else if (dashBoardSubsetID == 3) {alert("and unreachable");updateEmissionsDiagramGas();}
+// 
     updateEuResidentialEnergyDemand();
     
     // -----------------------------------------------------
@@ -1299,7 +1299,7 @@ function updateDashboard () {
 //    chart_dashboard_energy_supply.redraw(); // refresh energy supply chart
 
     
-    chart_dashboard_ghg_emissions_default.redraw(); // refresh ghg emissions chart
+  //  chart_dashboard_ghg_emissions_default.redraw(); // refresh ghg emissions chart
     chart_energy_energy_demand_eu_buildings.redraw();
     
 
@@ -4620,7 +4620,8 @@ function updateSupertablePathway (cfpIndex, colIndex) {
 
 
 function hasLandUseWarning() {
-  return (ds["warning_messages"]["land_use"].indexOf("No warning") != 0);
+    //  return (ds["warning_messages"]["land_use"].indexOf("No warning") != 0);
+    return false;
 }
 
 
@@ -4631,15 +4632,15 @@ function updateWarnings () {
 
  var climateInfos = "";
 
- if (ds["warning_messages"]["beyond_ipcc_assessment"].toUpperCase().indexOf("NO WARNING") != 0)    
-   climateInfos += translate (ds["warning_messages"]["beyond_ipcc_assessment"]) + "<br><br>";
- if (ds["warning_messages"]["50_percent_chance_warming"].toUpperCase().indexOf("NO WARNING") != 0) 
-    climateInfos += translate (ds["warning_messages"]["50_percent_chance_warming"]) + "<br><br>";
- if (ds["warning_messages"]["co2_concentrations"].toUpperCase().indexOf("NO WARNING") != 0) 	   
-   climateInfos += translate (ds["warning_messages"]["co2_concentrations"]) + "<br><br>";
- if (ds["warning_messages"]["crop_yields_and_warming"].toUpperCase().indexOf("NO WARNING") != 0)   
-   climateInfos += translate (ds["warning_messages"]["crop_yields_and_warming"]) + "<br><br>";
-
+// if (ds["warning_messages"]["beyond_ipcc_assessment"].toUpperCase().indexOf("NO WARNING") != 0)    
+//   climateInfos += translate (ds["warning_messages"]["beyond_ipcc_assessment"]) + "<br><br>";
+// if (ds["warning_messages"]["50_percent_chance_warming"].toUpperCase().indexOf("NO WARNING") != 0) 
+//    climateInfos += translate (ds["warning_messages"]["50_percent_chance_warming"]) + "<br><br>";
+// if (ds["warning_messages"]["co2_concentrations"].toUpperCase().indexOf("NO WARNING") != 0) 	   
+//   climateInfos += translate (ds["warning_messages"]["co2_concentrations"]) + "<br><br>";
+// if (ds["warning_messages"]["crop_yields_and_warming"].toUpperCase().indexOf("NO WARNING") != 0)   
+//   climateInfos += translate (ds["warning_messages"]["crop_yields_and_warming"]) + "<br><br>";
+//
  if (climateInfos.length > 0) {
    climateInfos = climateInfos.substring (0, climateInfos.length-8);
    document.getElementById('warning-icon-climate').src="imgs/icons/climate-enabled.gif"
@@ -4652,22 +4653,22 @@ function updateWarnings () {
  }
 
 
- if (ds["warning_messages"]["electricity_oversupply"].indexOf("No warning") != 0) {
-   document.getElementById('warning-icon-electricity').src="imgs/icons/electricity-enabled.gif"
-   document.getElementById("warnings-electricity").innerHTML = "<font color='red'>" + translate (ds["warning_messages"]["electricity_oversupply"]) + "</font>";
-   hasWarnings = true;
- }
- else {
+// if (ds["warning_messages"]["electricity_oversupply"].indexOf("No warning") != 0) {
+//   document.getElementById('warning-icon-electricity').src="imgs/icons/electricity-enabled.gif"
+//   document.getElementById("warnings-electricity").innerHTML = "<font color='red'>" + translate (ds["warning_messages"]["electricity_oversupply"]) + "</font>";
+//   hasWarnings = true;
+// }
+// else {
    document.getElementById('warning-icon-electricity').src="imgs/icons/electricity-disabled.gif"
    document.getElementById('warnings-electricity').innerHTML = translate ("Your current pathway has no warnings for electricity");
- }
+// }
 
 
  var energySecInfos = "";
 
- if (ds["warning_messages"]["fossil_fuel_proportion"].indexOf("No warning") != 0) energySecInfos += translate (ds["warning_messages"]["fossil_fuel_proportion"]) + "<br><br>";
- if (ds["warning_messages"]["bio_oversupply"].indexOf("No warning") != 0)	  energySecInfos += translate (ds["warning_messages"]["bio_oversupply"]) + "<br><br>";
- 
+ //if (ds["warning_messages"]["fossil_fuel_proportion"].indexOf("No warning") != 0) energySecInfos += translate (ds["warning_messages"]["fossil_fuel_proportion"]) + "<br><br>";
+ //if (ds["warning_messages"]["bio_oversupply"].indexOf("No warning") != 0)	  energySecInfos += translate (ds["warning_messages"]["bio_oversupply"]) + "<br><br>";
+ //
  if (energySecInfos.length > 0) {
    energySecInfos = energySecInfos.substring (0, energySecInfos.length-8);
    document.getElementById('warning-icon-energy-security').src="imgs/icons/energy-security-enabled.gif"
@@ -4679,35 +4680,35 @@ function updateWarnings () {
    document.getElementById('warnings-energy-security').innerHTML = translate ("Your current pathway has no warnings for energy security");
  }
 
- if (ds["warning_messages"]["ggr"].indexOf("No warning") != 0) {
-   document.getElementById('warning-icon-tech-dev').src="imgs/icons/tech-enabled.gif"
-   document.getElementById("warnings-tech-dev").innerHTML = "<font color='red'>" + translate (ds["warning_messages"]["ggr"]) + "</font>";
-   hasWarnings = true;
- }
- else {
+// if (ds["warning_messages"]["ggr"].indexOf("No warning") != 0) {
+//   document.getElementById('warning-icon-tech-dev').src="imgs/icons/tech-enabled.gif"
+//   document.getElementById("warnings-tech-dev").innerHTML = "<font color='red'>" + translate (ds["warning_messages"]["ggr"]) + "</font>";
+//   hasWarnings = true;
+// }
+// else {
    document.getElementById('warning-icon-tech-dev').src="imgs/icons/tech-disabled.gif"
    document.getElementById('warnings-tech-dev').innerHTML = translate ("Your current pathway has no warnings for technological development");
- }
+// }
 
- if (ds["warning_messages"]["level4"].indexOf("No warning") != 0) {
-
-   // var msg = translate (ds["warning_messages"]["level4"]);
-   document.getElementById('warning-icon-abatement-efforts').src="imgs/icons/4-enabled.gif"
-   document.getElementById("warnings-abatement-efforts").innerHTML = "<font color='red'>" + translate (ds["warning_messages"]["level4"]) + "</font>";
-
-   hasWarnings = true;
- }
- else {
+// if (ds["warning_messages"]["level4"].indexOf("No warning") != 0) {
+//
+//   // var msg = translate (ds["warning_messages"]["level4"]);
+//   document.getElementById('warning-icon-abatement-efforts').src="imgs/icons/4-enabled.gif"
+//   document.getElementById("warnings-abatement-efforts").innerHTML = "<font color='red'>" + translate (ds["warning_messages"]["level4"]) + "</font>";
+//
+//   hasWarnings = true;
+// }
+// else {
    document.getElementById('warning-icon-abatement-efforts').src="imgs/icons/4-disabled.gif"
    document.getElementById('warnings-abatement-efforts').innerHTML = translate ("Your current pathway has no warnings for level 4 abatement efforts");
- }
+// }
 
  var resourceInfos = "";
 
- if (ds["warning_messages"]["coal_reserves"].indexOf("No warning") != 0)    resourceInfos += translate (ds["warning_messages"]["coal_reserves"]) + "<br><br>";
- if (ds["warning_messages"]["oil_reserves"].indexOf("No warning")  != 0)    resourceInfos += translate (ds["warning_messages"]["oil_reserves"]) + "<br><br>";
- if (ds["warning_messages"]["gas_reserves"].indexOf("No warning")     != 0) resourceInfos += translate (ds["warning_messages"]["gas_reserves"]) + "<br><br>";
- if (ds["warning_messages"]["uranium_reserves"].indexOf("No warning") != 0) resourceInfos += translate (ds["warning_messages"]["uranium_reserves"]) + "<br><br>";
+// if (ds["warning_messages"]["coal_reserves"].indexOf("No warning") != 0)    resourceInfos += translate (ds["warning_messages"]["coal_reserves"]) + "<br><br>";
+// if (ds["warning_messages"]["oil_reserves"].indexOf("No warning")  != 0)    resourceInfos += translate (ds["warning_messages"]["oil_reserves"]) + "<br><br>";
+// if (ds["warning_messages"]["gas_reserves"].indexOf("No warning")     != 0) resourceInfos += translate (ds["warning_messages"]["gas_reserves"]) + "<br><br>";
+// if (ds["warning_messages"]["uranium_reserves"].indexOf("No warning") != 0) resourceInfos += translate (ds["warning_messages"]["uranium_reserves"]) + "<br><br>";
  
  if (resourceInfos.length > 0) {
    resourceInfos = resourceInfos.substring (0, resourceInfos.length-8);
@@ -4723,8 +4724,8 @@ function updateWarnings () {
 
  var landUseInfos = "";
 
- if (ds["warning_messages"]["forest"].indexOf("No warning") != 0)   landUseInfos += translate (ds["warning_messages"]["forest"]) + "<br><br>";
- if (ds["warning_messages"]["land_use"].indexOf("No warning") != 0) landUseInfos += translate (ds["warning_messages"]["land_use"]) + "<br><br>";
+// if (ds["warning_messages"]["forest"].indexOf("No warning") != 0)   landUseInfos += translate (ds["warning_messages"]["forest"]) + "<br><br>";
+// if (ds["warning_messages"]["land_use"].indexOf("No warning") != 0) landUseInfos += translate (ds["warning_messages"]["land_use"]) + "<br><br>";
  
  if (landUseInfos.length > 0) {
    landUseInfos = landUseInfos.substring (0, landUseInfos.length-8);

@@ -1,0 +1,17 @@
+--ignore-dir=resources/public/js
+--ignore-dir=resources/public/js-v22
+--ignore-dir=resources/public/js-v20a
+--js
+--html
+--css
+--ignore-file=match:-v22.html
+--ignore-file=match:-v20a.html
+--ignore-file=match:-2015.html
+--ignore-file=match:embargoed.html
+--ignore-file=match:globcalc-uncollapsed.html
+--ignore-file=match:gc-dummy-data.js
+--ignore-file=match:gc-map-animations.js
+--ignore-file=match:gc-one-pager-desc.js
+--ignore-file=match:gc-translation-tables
+--ignore-file=match:gc-translation-tables
+--ignore-file=match:gc-lever-chart-data.js

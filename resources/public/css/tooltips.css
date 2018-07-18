@@ -1,9 +1,9 @@
-  a.globalcalc-tooltip {outline:none; }
-  a.globalcalc-tooltip strong {line-height:16px;}
-  a.globalcalc-tooltip:hover {text-decoration:none;}
-  a.globalcalc-tooltip span { z-index:10;display:none; padding:14px 20px; margin-top:30px; margin-left:-160px; width:165px; line-height:16px; }
+  a.tooltip {outline:none; }
+  a.tooltip strong {line-height:16px}
+  a.tooltip:hover {text-decoration:none;}
+  a.tooltip span { z-index:10;display:none; padding:14px 20px; margin-top:30px; margin-left:-160px; width:140px; line-height:16px; }
   a.tooltip:hover span{ display:inline; position:absolute; border:2px solid #FFF; color:#EEE; background:#000 url(../imgs/tooltip/css-tooltip-gradient-bg.png) repeat-x 0 0; }
-  .callout {z-index:20;position:absolute;border:0;top:212px;left:210px;}
+  .callout {z-index:20;position:absolute;border:0;top:-14px;left:120px;}
 
   /*CSS3 extras*/
   /*
@@ -16,15 +16,14 @@
   a.tooltip1 span { z-index:10;display:none; padding:14px 20px; margin-top:30px; margin-left:-280px; width:620px; line-height:16px; }
   a.tooltip1:hover span{ display:inline; position:absolute; border:2px solid #FFF; color:#EEE; background:#000 url(../imgs/tooltip/css-tooltip-gradient-bg.png) repeat-x 0 0; }
 
-  a.tooltip2 {outline:none; color:#6D6E71;}
-  a.tooltip2 strong {line-height:30px;}
-  a.tooltip2:hover {text-decoration:none;}
-  a.tooltip2 span { z-index:10;display:none; padding:14px 20px; margin-top:-250px; margin-left:-240px; width:240px; line-height:16px; }
-  a.tooltip2:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
-  .callout2 {z-index:20;position:absolute;top:-30px;border:0;left:22px;}
-  a.tooltip font{color:#6D6E71;}  
-
-  .lever-spacing {
+  a.tooltip2 {outline:none; } 
+  a.tooltip2 strong {line-height:30px;} 
+  a.tooltip2:hover {text-decoration:none;} 
+  a.tooltip2 span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:140px; line-height:16px; } 
+  a.tooltip2:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;} 
+  .callout2 {z-index:20;position:absolute;top:30px;border:0;left:-12px;} 
+  
+    .lever-spacing {
       padding-right: 10px;
       white-space: nowrap;
       text-overflow:ellipsis;
@@ -32,4 +31,5 @@
       max-width: 150px;
       display:block;
   }
+
 

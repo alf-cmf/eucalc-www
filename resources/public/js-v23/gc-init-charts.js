@@ -2350,7 +2350,7 @@ function initDashboardCharts () {
     // -------------------------------------------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------------------------------------------
 
-    chart_dashboard_ghg_emissions_default = initEmissionChartDefault ('container_dashboard_ghg_emissions_default');
+//    chart_dashboard_ghg_emissions_default = initEmissionChartDefault ('container_dashboard_ghg_emissions_default');
 
     // an eu chart...
     chart_energy_energy_demand_eu_buildings = initEnergyDemandChart ('container_dashboard_eu_residential_energy_demand');
@@ -7123,7 +7123,7 @@ function initEnergyDemandChart (container) {
               fontSize: '9px',
 	      fontWeight: 'normal'
             },
-            text: translate ('EJ'),
+            text: translate (''),
             margin: 5
           },
           min: 0,
@@ -7141,7 +7141,7 @@ function initEnergyDemandChart (container) {
           },
           // valueSuffix: ' EJ',
           useHTML: true,
-          headerFormat: '{point.key}' + ' (' + translate('EJ') + ')' + '<table>',
+          headerFormat: '{point.key}' + ' (' + translate('') + ')' + '<table>',
           pointFormat: '<tr><td style="color: {series.color}">{series.name}: </td>' +
           '<td style="text-align: right">{point.y}</td></tr>',
           footerFormat: '</table>'

@@ -20,7 +20,7 @@ var emissionSubNavID 	= 1;
 
 function handleOverview2ndLevelNavigation (activeId) {
 
-  alert ('handleOverview2ndLevelNavigation (' + activeId + ')');
+    if (CHART_DEBUG) alert ('handleOverview2ndLevelNavigation (' + activeId + ')');
 
 /// keep selection state as is since selection does not exist anymore at this level
 ///    for ( var i=1; i<=3; i++)
@@ -52,7 +52,7 @@ function handleOverview2ndLevelNavigation (activeId) {
     var rowNode = document.createElement("tr");
 ////    addDivCell (rowNode, "container_dashboard_energy_supply-active-1");
 ////    addDivCell (rowNode, "container_dashboard_energy_demand-active-1");
-      addDivCell (rowNode, "container_dashboard_ghg_emissions_default");
+//      addDivCell (rowNode, "container_dashboard_ghg_emissions_default");
       addDivCell (rowNode, "container_dashboard_eu_residential_energy_demand");
 ////    addDivCell (rowNode, "container_dashboard_co2_budget-active-1");
 
@@ -73,7 +73,7 @@ function handleOverview2ndLevelNavigation (activeId) {
 ////
 /////    document.getElementById("container_dashboard_energy_supply-active-1").setAttribute("style", "width: 190px; height: 310px");
 /////    document.getElementById("container_dashboard_energy_demand-active-1").setAttribute("style", "width: 145px; height: 310px");
-      document.getElementById("container_dashboard_ghg_emissions_default").setAttribute("style", "width: 370px; height: 310px");
+  //    document.getElementById("container_dashboard_ghg_emissions_default").setAttribute("style", "width: 370px; height: 310px");
       document.getElementById("container_dashboard_eu_residential_energy_demand").setAttribute("style", "width: 370px; height: 410px");
 /////    document.getElementById("container_dashboard_co2_budget-active-1").setAttribute("style", "width: 120px; height: 310px");
 //// LEFT OUT FOR 9.5 - NOGLOBCALC - NOTHERMOMETER

@@ -1,6 +1,42 @@
+
+// takes an array identifierArray of non-redundant identifiers
+// (otherwise the trick from below is broken) as input and returns an
+// array of indices from 0 to the length of the input array - 1
+function getEuIterator(identifierArray) {
+    
+    return identifierArray.map(identifier => identifierArray.indexOf(identifier));
+    
+}
+
+// extracts an array of unique data identifiers/points found under an
+// index selectedIndex from a json "Eu-Calc" dataset jsonDataset
+// (e.g. json returned by eucalc-app) within a context identified by
+// jsonContextIdentifier; an "Eu-Calc" dataset is a map of multiple
+// subdatasets identified by a jsonContextIdentifier. Such a
+// subdataset is in turn an array of arrays having a header as first
+// element; this is a generalisation from getEuDsCountries
+function selectEuArrayOfUniques (selectedIndex, jsonDataset, jsonContextIdentifier) {
+
+    var data_array = jsonDataset[jsonContextIdentifier].slice(1).map(point => point[selectedIndex]);
+    var unique_data_array = data_array.filter(function (x, i, a) { return a.indexOf(x) == i; });
+    return unique_data_array;
+    
+}
+
+// unsorted generalisation from getEuDsSeries where
+// whereConstraintValue plays the role of the country parameter
+function selectEuArrayOfData (selectedIndex, jsonDataset, jsonContextIdentifier, whereConstraintIndex, whereConstraintValue) {
+
+    var eu_data_array = jsonDataset[jsonContextIdentifier].slice(1).filter(point => point[whereConstraintIndex] == whereConstraintValue);
+    eu_data_array = eu_data_array.map(point => point[selectedIndex]);
+    return eu_data_array;
+    
+}
+
+
 function getEuDsCountries () {
    
-    var countries = eds["result"].slice(1).map(point => point[2]);
+    var countries = ds["result"].slice(1).map(point => point[2]);
     var country_names = countries.filter(function (x, i, a) { return a.indexOf(x) == i; });
     return country_names;
 
@@ -8,7 +44,7 @@ function getEuDsCountries () {
 
 function getEuDsSeries (country) {
     
-    var country_metrics = eds["result"].slice(1).filter(point => point[2] == country);
+    var country_metrics = ds["result"].slice(1).filter(point => point[2] == country);
     country_metrics = country_metrics.map(point => [parseInt(point[1]), roundValue(point[0]/5000)]);
     return country_metrics.sort();
     
@@ -52,6 +88,6 @@ function getEuDsSeries (country) {
 
 function getEuDsTitle () {
 
-    return eds["result"][0][0];
+    return ds["result"][0][0];
 
 }
