@@ -50,6 +50,26 @@ function getEuDsSeries (country) {
     
 }
 
+// takes the years given for a refCountry as reference values in order
+// to replace missing values for countries by the value NAto
+function getEuDsSeriesWithNAValues (country, refCountry, NAto) {
+
+    var refCountry_metrics = ds["result"].slice(1).filter(point => point[2] == refCountry);
+    var country_metrics = ds["result"].slice(1).filter(point => point[2] == country);
+    country_metrics = refCountry_metrics.map(function(refPoint) {
+	var refDate = refPoint[1];
+	var rv = NAto;
+	country_metrics.map(function(point) {
+	    if (point[1] == refDate) rv = point[0]; 
+	});
+	return [parseInt(refDate), roundValue(rv/5000)];
+    });
+    return country_metrics.sort();
+    
+}
+
+
+
 //function getColors (howMany) {
 //
 //color: '#ffffcc',

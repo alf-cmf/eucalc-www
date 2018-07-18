@@ -1317,10 +1317,11 @@ function updateEuResidentialEnergyDemand () {
 
     while(chart_energy_energy_demand_eu_buildings.series.length > 0) 
 	chart_energy_energy_demand_eu_buildings.series[0].remove(true);
-	
+
+    refCountry = "France";
     country_names = getEuDsCountries();
-    country_iterator = country_names.map(name => country_names.indexOf(name))
-    country_series = country_names.map(country => getEuDsSeries(country));
+    country_iterator = getEuIterator(country_names);
+    country_series = country_names.map(country => getEuDsSeriesWithNAValues(country, refCountry, null));
     country_iterator.map(country_index => chart_energy_energy_demand_eu_buildings.addSeries(
 	{
 	    name: country_names[country_index],
