@@ -1403,6 +1403,7 @@ var CHART_DEBUG = false; // true;
 var INIT_DEBUG = false; // true;
 var LEVER_DEBUG = false; // true;
 var LEVEL_DEBUG = false; // true;
+var TOP_MENU_DEBUG = true; // true;
 
 var USE_DUMMY_DATA = false; // true;
 var dummyCounter = 0;
@@ -1755,6 +1756,8 @@ document.getElementById("lever-container").appendChild(tableNode);
 //	    alert("failed fetching data from pathway selector: '" + data + "'");
 //	});
 
+    // do not add anything html-structural below initUI because it may
+    // destroy the top-menu (initTopMenu)
     initUI();
 
 //    var refreshIntervalId = null;
@@ -1770,20 +1773,6 @@ document.getElementById("lever-container").appendChild(tableNode);
 //	}
 //    }, 1000);
     //
-    
-    
-    // temporarily deactivate the 1st level menu here
-    $('#mn-1').hide();
-    $('#mn-2').hide();
-    $('#mn-3').hide();
-    $('#mn-4').hide();
-    $('#mn-5').hide();
-    $('#mn-6').hide();
-    $('#warnings-header').hide();
-    $('#container_dashboard_energy_supply-active-1').width("20px");
-    $('#container_dashboard_energy_demand-active-1').width("20px");
-    $('#container_dashboard_co2_budget-active-1').width("20px");
-
 
 //leverURL = "http://127.0.0.1:5000/api/v1.0/levers";
 //
@@ -1813,14 +1802,22 @@ function translateMasterleverName (id, name) {
      "</font><span> <img class='callout' src='imgs/tooltip/callout_black.gif' /><div id='master-lever-" + id + "-0' align='left'></div></span>";
 }
 
-// taken from https://www.w3schools.com/howto/howto_js_sticky_header.asp
+// original start code taken from
+// https://www.w3schools.com/howto/howto_js_sticky_header.asp
+//
+// this function is independent from $(".top-menu").height() and
+// $("#top-menu-minimized").height() given that the initial rendering
+// of those elements has already finished at call-time.
 function initTopMenu() {
-    var budgetOverlap = 65;
+
     var didScroll = false;
-    var topMenuHeight = $(".top-menu").height();
+    // the height of .top-menu is switching values between the sticky
+    // and not sticky state: it corresponds in non-sticky state to the
+    // full height of the top-menu; in sticky $(".top-menu").height(),
+    // there is a differential that's apparently jquery specific
+    var topMenuInitialHeight = $(".top-menu").height();
     var headerHeight = $("#top-menu-minimized").height();
     var timelineTopMargin = 20;
-
     // Scroll position indicators
     var sectionStarts = $( ".module, .content" ).map(function() { return $( this ).offset().top; });
     var sectionHeights = $( ".module, .content" ).map(function( index ) { return $( this ).height(); });
@@ -1832,7 +1829,7 @@ function initTopMenu() {
     var sticky = header.offsetTop;
 
     // set initial offset for bootsidemenu
-    $("#lever-container").css("margin-top", topMenuHeight - headerHeight + budgetOverlap);
+    $("#lever-container").css("margin-top", topMenuInitialHeight);
 
     //    alert("sticky is '" + sticky + "'");
     window.onscroll = function() {
@@ -1857,10 +1854,10 @@ function initTopMenu() {
 		///		    $('#lever-container').BootSideMenu.close();
 		///		}
 
- 		$("#lever-container").css("margin-top", budgetOverlap);
+ 		$("#lever-container").css("margin-top", headerHeight);
 		//// tag LEFT OUT FOR BERND - NOMARGIN
 		////		$("#lever-container").css("margin-top", 0);
-		$("#timeline").css("margin-top", timelineTopMargin + budgetOverlap);
+		$("#timeline").css("margin-top", timelineTopMargin + headerHeight);
  		///		tag LEFT OUT FOR BERND - NOPANELDYNAMICS
 		///		$("#container-2l-navigation").css("padding-left", 20);
 		$("#top-menu-minimized").addClass("top-menu-sticky");
@@ -1871,7 +1868,7 @@ function initTopMenu() {
 		///		    $('#lever-container').BootSideMenu.open();
 		///		}
 
-		$("#lever-container").css("margin-top", topMenuHeight - window.pageYOffset - headerHeight + budgetOverlap);
+		$("#lever-container").css("margin-top", topMenuInitialHeight - window.pageYOffset);
 		//// tag LEFT OUT FOR BERND - NOMARGIN
 		////		$("#lever-container").css("margin-top", sticky - window.pageYOffset );
 		$("#timeline").css("margin-top", timelineTopMargin);
@@ -2157,9 +2154,27 @@ function initUI () {
     // initCostCharts();
     // initCostOverviewCharts();
 
+
+    // --------------------------------------------------------
+    // temporarily deactivate the 1st level menu here and to some late
+    // GC differential initialization here
+    // WARNING: do this before initTopMenu
+    // --------------------------------------------------------
+    $('#mn-1').hide();
+    $('#mn-2').hide();
+    $('#mn-3').hide();
+    $('#mn-4').hide();
+    $('#mn-5').hide();
+    $('#mn-6').hide();
+    $('#warnings-header').hide();
+    $('#container_dashboard_energy_supply-active-1').width("20px");
+    $('#container_dashboard_energy_demand-active-1').width("20px");
+    $('#container_dashboard_co2_budget-active-1').width("20px");
+
     // --------------------------------------------------------
     // init the top-menu
     // --------------------------------------------------------
+    if (TOP_MENU_DEBUG) alert("topMenuHeight:'" + $(".top-menu").height() + "' headerHeight:'" + $("#top-menu-minimized").height() + "'");
     initTopMenu();
 
     fetchModelOutput(true);
@@ -4622,11 +4637,11 @@ legend {    color: #ddd; }
     <div id="budget_no_messages">
 
 
-    <table bgcolor="#191919" height="310px" border="0" valign="top" align="right" >
+    <table bgcolor="#191919" height="150px" border="0" valign="top" align="right" >
       <tr>
         <td valign="center" align="right">
 
-        <div id="container_screens_co2_budget"  style="width: 125px; height: 310px"></div>
+        <div id="container_screens_co2_budget"  style="width: 125px; height: 0px"></div>
 
     </table>
 
